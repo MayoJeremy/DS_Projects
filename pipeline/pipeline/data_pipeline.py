@@ -51,10 +51,25 @@ def remove_from_list(fg: Generator) -> Generator:
         yield line
 
 
+def filter_lines(fg: Generator) -> Generator:
+    """Filter entries by State (CA)
+
+    Args:
+        fg (Generator): File Iterator
+
+    Yields:
+        Generator: File Iterator
+    """
+    return (line for line in fg if line[4] in ["CA", "state"])
+
+
 def load_data(filename: str):
     file_generator = extract_data(filename)
     split_generator = split_line(file_generator)
     remove_generator = remove_from_list(split_generator)
+    filter_generator = filter_lines(remove_generator)
+    # result = next(filter_generator)
+    # print(result)
 
 
 if __name__ == "__main__":
