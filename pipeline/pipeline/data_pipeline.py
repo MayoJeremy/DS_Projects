@@ -24,9 +24,22 @@ def extract_data(filename: str) -> Generator:
             yield line.strip()
 
 
+def split_line(fg: Generator) -> Generator:
+    """Split String to list.
+
+    Args:
+        fg (Generator): File Iterator
+
+    Yields:
+        Generator: File Iterator
+    """
+    for line in fg:
+        yield line.split(",")
+
+
 def load_data(filename: str):
     fg = extract_data(filename)
-    print("File Generator:", fg)
+    fg = split_line(fg)
 
 
 if __name__ == "__main__":
