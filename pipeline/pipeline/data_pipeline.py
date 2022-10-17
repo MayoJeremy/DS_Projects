@@ -63,12 +63,26 @@ def filter_lines(fg: Generator) -> Generator:
     return (line for line in fg if line[4] in ["CA", "state"])
 
 
+def dictify(fg: Generator) -> Generator:
+    """Create Dict for each entry.
+
+    Args:
+        fg (Generator): file iterator
+
+    Yields:
+        Generator: file iterator
+    """
+    header = next(fg)
+    return (dict(zip(header, line)) for line in fg)
+
+
 def load_data(filename: str):
     file_generator = extract_data(filename)
     split_generator = split_line(file_generator)
     remove_generator = remove_from_list(split_generator)
     filter_generator = filter_lines(remove_generator)
-    # result = next(filter_generator)
+    dict_generator = dictify(filter_generator)
+    # result = next(dict_generator)
     # print(result)
 
 
