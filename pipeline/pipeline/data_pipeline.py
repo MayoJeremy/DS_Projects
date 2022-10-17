@@ -38,8 +38,8 @@ def split_line(fg: Generator) -> Generator:
 
 
 def load_data(filename: str):
-    fg = extract_data(filename)
-    fg = split_line(fg)
+    file_generator = extract_data(filename)
+    split_generator = split_line(file_generator)
 
 
 if __name__ == "__main__":
