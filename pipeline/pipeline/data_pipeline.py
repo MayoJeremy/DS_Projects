@@ -37,9 +37,24 @@ def split_line(fg: Generator) -> Generator:
         yield line.split(",")
 
 
+def remove_from_list(fg: Generator) -> Generator:
+    """Remove first element from list.
+
+    Args:
+        fg (Generator): File Iterator
+
+    Yields:
+        Generator: File Iterator
+    """
+    for line in fg:
+        line.pop(0)
+        yield line
+
+
 def load_data(filename: str):
     file_generator = extract_data(filename)
     split_generator = split_line(file_generator)
+    remove_generator = remove_from_list(split_generator)
 
 
 if __name__ == "__main__":
