@@ -25,3 +25,8 @@ z.B. reference .d
 HTML-Seiten werden erzeugt und unter /site abgelegt
 
     mkdocs build
+
+## Python-Webserver starten
+in /site
+
+    python -m http.server
