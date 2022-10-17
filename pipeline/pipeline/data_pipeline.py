@@ -22,3 +22,12 @@ def extract_data(filename: str) -> Generator:
     with open(DATA_DIR / filename, encoding="utf-8") as f:
         for line in f:
             yield line.strip()
+
+
+def load_data(filename: str):
+    fg = extract_data(filename)
+    print("File Generator:", fg)
+
+
+if __name__ == "__main__":
+    load_data("techcrunch.csv")
