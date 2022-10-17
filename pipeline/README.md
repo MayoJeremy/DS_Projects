@@ -13,3 +13,15 @@ eine Dokumentation erstellen.
 
     cd projects/pipeline
     mkdocs new .
+
+## Mkdocs Dateien unter docs anlegen
+z.B. reference .d
+
+## Mkdocs Server starten
+
+    mkdocs serve
+
+## Mkdocs Build (statische HTML-Seite erzeugen)
+HTML-Seiten werden erzeugt und unter /site abgelegt
+
+    mkdocs build
