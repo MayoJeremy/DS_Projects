@@ -82,6 +82,8 @@ def load_data(filename: str):
     remove_generator = remove_from_list(split_generator)
     filter_generator = filter_lines(remove_generator)
     dict_generator = dictify(filter_generator)
+
+    return dict_generator
     # result = next(dict_generator)
     # print(result)
 

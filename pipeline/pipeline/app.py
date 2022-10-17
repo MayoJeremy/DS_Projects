@@ -6,7 +6,8 @@ from data_pipeline import load_data
 
 
 def main():
-    load_data("techcrunch.csv")
+    for entry in load_data("techcrunch.csv"):
+        print(entry)
 
 
 if __name__ == "__main__":
