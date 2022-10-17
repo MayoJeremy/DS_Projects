@@ -8,3 +8,8 @@ eine Dokumentation erstellen.
 
     pip install mkdocs
     pip install "mkdocstrings[python]"
+
+## Mkdocs im Rootverzeichnis des Projekts initialisieren
+
+    cd projects/pipeline
+    mkdocs new .
