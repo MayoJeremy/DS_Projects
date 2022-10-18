@@ -4,7 +4,7 @@ module consists of following functions:
 
 """
 from pathlib import Path
-from typing import Generator
+from typing import Callable, Generator
 
 BASE_DIR = Path(__file__).parent.parent
 DATA_DIR = BASE_DIR / "data"
@@ -29,7 +29,7 @@ def extract_data(filename: str) -> Generator:
 
 
 def split_line(fg: Generator, seperator: str = ",") -> Generator:
-    """Split String to list.
+    """Obsoluete. Split String to list.
 
     Args:
         fg (Generator): File Iterator
@@ -40,6 +40,15 @@ def split_line(fg: Generator, seperator: str = ",") -> Generator:
     for line in fg:
         if isinstance(line, str):
             yield line.split(seperator)
+
+
+def split_closure(seperator: str = ",") -> Callable:
+    def inner(fg: Generator) -> Generator:
+        """Split String to list."""
+        for line in fg:
+            if isinstance(line, str):
+                yield line.split(seperator)
+    return inner
 
 
 def remove_from_list(fg: Generator) -> Generator:
@@ -88,7 +97,7 @@ def load_data(filename: str) -> Generator:
     """Bessere Pipeline"""
     pipeline = [
         extract_data,
-        split_line,
+        split_closure(",x"),
         remove_from_list,
         filter_lines,
         dictify
