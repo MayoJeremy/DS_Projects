@@ -52,8 +52,11 @@ def remove_from_list(fg: Generator) -> Generator:
         Generator: File Iterator
     """
     for line in fg:
-        line.pop(0)
-        yield line
+        try:
+            line.pop(0)
+            yield line
+        except ValueError:
+            pass
 
 
 def filter_lines(fg: Generator) -> Generator:
