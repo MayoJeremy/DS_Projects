@@ -97,7 +97,7 @@ def load_data(filename: str) -> Generator:
     """Bessere Pipeline"""
     pipeline = [
         extract_data,
-        split_closure(",x"),
+        split_closure(","),
         remove_from_list,
         filter_lines,
         dictify
