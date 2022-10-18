@@ -19,12 +19,16 @@ def extract_data(filename: str) -> Generator:
     Yields:
         File Iterator
     """
-    with open(DATA_DIR / filename, encoding="utf-8") as f:
-        for line in f:
-            yield line.strip()
+    try:
+        with open(DATA_DIR / filename, encoding="utf-8") as f:
+            for line in f:
+                yield line.strip()
+    except FileNotFoundError:
+        print("Die Datei konnte nicht gefunden werden.")
+        exit(-1)
 
 
-def split_line(fg: Generator) -> Generator:
+def split_line(fg: Generator, seperator: str = ",") -> Generator:
     """Split String to list.
 
     Args:
@@ -34,7 +38,7 @@ def split_line(fg: Generator) -> Generator:
         Generator: File Iterator
     """
     for line in fg:
-        yield line.split(",")
+        yield line.split(seperator)
 
 
 def remove_from_list(fg: Generator) -> Generator:
