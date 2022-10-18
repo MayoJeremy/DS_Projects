@@ -84,7 +84,22 @@ def dictify(fg: Generator) -> Generator:
     return (dict(zip(header, line)) for line in fg)
 
 
-def load_data(filename: str):
+def load_data(filename: str) -> Generator:
+    """Bessere Pipeline"""
+    pipeline = [
+        extract_data,
+        split_line,
+        remove_from_list,
+        filter_lines,
+        dictify
+    ]
+    gen = filename
+    for fn in pipeline:
+        gen = fn(gen)
+    return gen
+
+
+def load_data_old(filename: str) -> Generator:
     file_generator = extract_data(filename)
     split_generator = split_line(file_generator)
     remove_generator = remove_from_list(split_generator)
@@ -97,4 +112,4 @@ def load_data(filename: str):
 
 
 if __name__ == "__main__":
-    load_data("techcrunch.csv")
+    print(list(load_data("techcrunch.csv")))
