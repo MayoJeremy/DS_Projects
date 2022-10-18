@@ -38,7 +38,8 @@ def split_line(fg: Generator, seperator: str = ",") -> Generator:
         Generator: File Iterator
     """
     for line in fg:
-        yield line.split(seperator)
+        if isinstance(line, str):
+            yield line.split(seperator)
 
 
 def remove_from_list(fg: Generator) -> Generator:
