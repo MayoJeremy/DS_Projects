@@ -14,18 +14,13 @@ def addEntry(
     item_category: str,
 ):
     try:
-        """
-        TODO: Check for existing item_name in menu_dict -> exit function/return
-        """
         item_menu_id = menuID(menu_dict, item_category)
-        menu_dict[item_category].update(
-            {
-                item_menu_id: {
-                    "Item_ID": item_name,
-                    "Price": float(item_price),
-                }
-            },
-        )
+        menu_dict[item_menu_id] = {
+            "Item_ID": item_name,
+            "Category": item_category,
+            "Price": float(item_price),
+        }
+
     except KeyError:
         start, end = input(
             f"For {item_category} is no ID-Range specified.\n(start,end)>>"
@@ -67,7 +62,8 @@ def saveData(file_name: str, menu_dict: dict) -> None:
 
 
 def main():
-    test_dict = loadData("test.json")
+    file_name = "acasa.json"
+    test_dict = loadData(file_name)
     addEntry(
         test_dict,
         item_category="Pizza",
@@ -75,7 +71,8 @@ def main():
         item_name="Pizza Thuenfisch",
     )
     print(test_dict)
-    saveData(DATA_DIR / "test.json", test_dict)
+    # print(test_dict["10"])
+    saveData(file_name, test_dict)
 
 
 if __name__ == "__main__":
