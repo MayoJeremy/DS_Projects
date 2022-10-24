@@ -1,0 +1,18 @@
+{
+    "Pizza": {
+        "start": 10,
+        "end": 60,
+        "10": {
+            "Item_ID": "Pizza Thuenfisch",
+            "Price": 1.25
+        },
+        "11": {
+            "Item_ID": "Pizza Thuenfisch",
+            "Price": 1.25
+        },
+        "12": {
+            "Item_ID": "Pizza Thuenfisch",
+            "Price": 1.25
+        }
+    }
+}
