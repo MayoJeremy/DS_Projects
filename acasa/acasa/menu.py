@@ -19,7 +19,7 @@ def addEntry(
             menu_dict, item_category
         )  # TODO check if in Category -> item_name exists
         menu_dict[item_menu_id] = {
-            "Item_ID": item_name,
+            "Item": item_name,
             "Category": item_category,
             "Price": float(item_price),
         }
