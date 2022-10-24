@@ -74,15 +74,9 @@ def main():
     test_dict = loadData(file_name)
     addEntry(
         test_dict,
-        item_category="Pizza",
-        item_price=1.25,
-        item_name="Pizza Thuenfisch",
-    )
-    addEntry(
-        test_dict,
-        item_category="Pizza",
-        item_price=1.35,
-        item_name="Pizza Thunfisch",
+        item_category="Auflauf",
+        item_price=7,
+        item_name="Kartoffel",
     )
     saveData(file_name, test_dict)
 
