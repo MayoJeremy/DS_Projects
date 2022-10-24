@@ -11,7 +11,10 @@ def calcTotal(order: list[tuple[str, int]], menu_dict: dict):
     return total_cost
 
 
-def listItems(order: list[tuple[str, int]], menu_dict: dict) -> tuple[float, list]:
+def listItems(
+    order: list[tuple[str, int]],
+    menu_dict: dict,
+) -> tuple[float, list]:
     total_cost = 0.0
     listing = []
     for s_order in order:

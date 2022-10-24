@@ -51,7 +51,8 @@ def menuID(menu_dict: dict, item_category: str) -> str:
         if entry.get("Category") and (entry["Category"] == item_category):
             counter[item_category] += 1
     item_id = menu_dict[item_category]["start"] + counter[item_category] + 1
-    return str(item_id) if item_id < menu_dict[item_category]["end"] else "9999"
+    return str(item_id) if item_id < menu_dict[item_category]["end"] else \
+        "9999"
 
 
 def loadData(file_name: str) -> dict:
