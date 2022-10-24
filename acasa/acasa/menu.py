@@ -44,15 +44,14 @@ def addCat(cat_dict: dict, item_category: str, start: int, end: int):
     cat_dict[item_category] = {"start": start, "end": end}
 
 
-def menuID(menu_dict: dict, item_category: str) -> str:
+def menuID(menu_dict: dict, item_category: str) -> int:
     """gets incremented ID for Category"""
     counter = Counter()
     for entry in menu_dict.values():
         if entry.get("Category") and (entry["Category"] == item_category):
             counter[item_category] += 1
-    item_id = menu_dict[item_category]["start"] + counter[item_category] + 1
-    return str(item_id) if item_id < menu_dict[item_category]["end"] else \
-        "9999"
+    item_id = menu_dict[item_category]["start"] + counter[item_category]  # + 1
+    return item_id if item_id < menu_dict[item_category]["end"] else 9999
 
 
 def loadData(file_name: str) -> dict:
@@ -85,8 +84,6 @@ def main():
         item_price=1.35,
         item_name="Pizza Thunfisch",
     )
-    print(test_dict)
-    # print(test_dict["10"])
     saveData(file_name, test_dict)
 
 
