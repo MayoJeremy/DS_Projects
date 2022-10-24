@@ -2,6 +2,7 @@
 
 from menu import loadData
 import pprint
+from collections import Counter
 
 
 def listItems(
@@ -21,6 +22,21 @@ def listItems(
             )
         )
     return total_cost, listing
+
+
+def getOrder():
+    counter = Counter()
+    order_list = []
+    order = []
+    while 1:
+        user_in = input("'_q' to quit| choice >> ")
+        if user_in == "_q":
+            break
+        counter[user_in] += 1
+        order_list.append(int(user_in))
+    for order_id, order_name in counter.items():
+        order.append((order_id, order_name))
+    return order
 
 
 def printOrder(total_cost: float, listing: list):
