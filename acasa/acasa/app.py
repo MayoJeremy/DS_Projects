@@ -3,12 +3,14 @@ Hauptprogramm
 """
 
 from menu import loadData
-from invoice import listItems, printOrder
+from invoice import listItems, printOrder, getOrder
 
 
 def main():
+
     menu_dict = loadData("acasa.json")
-    order = [(10, 2), (11, 1)]  # TODO whileloop for Order and Quit
+    order = getOrder()
+
     try:
         price_total, printable_list = listItems(order, menu_dict)
     except KeyError as e:
