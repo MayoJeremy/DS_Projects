@@ -29,11 +29,11 @@ def getOrder():
     order_list = []
     order = []
     while 1:
-        user_in = input("'_q' to quit| choice >> ")
-        if user_in == "_q":
+        user_in = int(input("0 to quit | choice >> "))
+        if not user_in:
             break
         counter[user_in] += 1
-        order_list.append(int(user_in))
+        order_list.append(user_in)
     for order_id, order_name in counter.items():
         order.append((order_id, order_name))
     return order
