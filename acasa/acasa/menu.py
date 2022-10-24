@@ -1,6 +1,7 @@
 """Menu-file"""
 from pathlib import Path
 import json
+from collections import Counter
 
 
 BASE_DIR = Path(__file__).parent.parent
@@ -14,7 +15,9 @@ def addEntry(
     item_category: str,
 ):
     try:
-        item_menu_id = menuID(menu_dict, item_category)
+        item_menu_id = menuID(
+            menu_dict, item_category
+        )  # TODO check if in Category -> item_name exists
         menu_dict[item_menu_id] = {
             "Item_ID": item_name,
             "Category": item_category,
@@ -42,7 +45,12 @@ def addCat(cat_dict: dict, item_category: str, start: int, end: int):
 
 
 def menuID(menu_dict: dict, item_category: str) -> str:
-    item_id = len(menu_dict[item_category]) - 2 + menu_dict[item_category]["start"]
+    """gets incremented ID for Category"""
+    counter = Counter()
+    for entry in menu_dict.values():
+        if entry.get("Category") and (entry["Category"] == item_category):
+            counter[item_category] += 1
+    item_id = menu_dict[item_category]["start"] + counter[item_category] + 1
     return str(item_id) if item_id < menu_dict[item_category]["end"] else "9999"
 
 
@@ -69,6 +77,12 @@ def main():
         item_category="Pizza",
         item_price=1.25,
         item_name="Pizza Thuenfisch",
+    )
+    addEntry(
+        test_dict,
+        item_category="Pizza",
+        item_price=1.35,
+        item_name="Pizza Thunfisch",
     )
     print(test_dict)
     # print(test_dict["10"])
