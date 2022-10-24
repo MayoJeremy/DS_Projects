@@ -51,23 +51,23 @@ def menuID(menu_dict: dict, item_category: str) -> str:
     return str(item_id) if item_id < menu_dict[item_category]["end"] else "9999"
 
 
-def loadData(file_path: str) -> dict:
+def loadData(file_name: str) -> dict:
     menu_dict = {}
-    if file_path.is_file():
-        with open(file_path, "r") as f:
+    if (DATA_DIR / file_name).is_file():
+        with open(DATA_DIR / file_name, "r") as f:
             menu_dict = json.load(f)
     else:
-        saveData(file_path, menu_dict)
+        saveData(DATA_DIR / file_name, menu_dict)
     return menu_dict
 
 
-def saveData(file_path: str, menu_dict: dict) -> None:
-    with open(file_path, "w") as f:
+def saveData(file_name: str, menu_dict: dict) -> None:
+    with open(DATA_DIR / file_name, "w") as f:
         json.dump(menu_dict, f, indent=4, ensure_ascii=False)
 
 
 def main():
-    test_dict = loadData(DATA_DIR / "test.json")
+    test_dict = loadData("test.json")
     addEntry(
         test_dict,
         item_category="Pizza",
