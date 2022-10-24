@@ -15,7 +15,8 @@ def main():
         price_total, printable_list = listItems(order, menu_dict)
     except KeyError as e:
         print(e)
-        # TODO fehlenden Menüeintrag nacheintragen?
+        # TODO fehlenden Menüeintrag nacheintragen? oder in getOrder catchen,
+        # dass nicht existiert
         print("Menu überprüfen (acasa.json)")
     else:
         printOrder(price_total, printable_list)

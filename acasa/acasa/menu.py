@@ -72,6 +72,7 @@ def saveData(file_name: str, menu_dict: dict) -> None:
 def main():
     file_name = "acasa.json"
     test_dict = loadData(file_name)
+    # TODO admin of Menu.json
     addEntry(
         test_dict,
         item_category="Auflauf",
