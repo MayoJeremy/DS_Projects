@@ -80,11 +80,18 @@ def make_receipt(orders: list):
     return receipt, receipt_total
 
 
-def print_receipt(receipt_items: list, receipt_total: float):
+def string_receipt(receipt_items: list, receipt_total: float):
+    message = ""
     for row in receipt_items:
-        print(row)
-    print(40 * "*")
-    print(f"Total: {receipt_total:.2f} €")
+        message += row + "\n"
+    message += 40 * "*" + "\n"
+    message += f"Total: {receipt_total:.2f} €\n"
+    return message
+
+
+def save_receipt(receipt: str):
+    with open("../data/receipt.txt", "w", encoding="UTF-8") as file:
+        file.write(receipt)
 
 
 def main():
@@ -93,8 +100,9 @@ def main():
     # pprint.pprint(get_menu())
     order = get_order()
     receipt = make_receipt(order)
-    print_receipt(*receipt)
-
+    receipt_string = string_receipt(*receipt)
+    print(receipt_string)
+    save_receipt(receipt_string)
     conn.close()
 
 
