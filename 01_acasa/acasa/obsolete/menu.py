@@ -1,5 +1,5 @@
 """Menu-file"""
-from pathlib import Path  # FIXME absolute-> relative pathing
+from pathlib import Path  
 import json
 from collections import Counter
 
@@ -14,11 +14,11 @@ def addEntry(
     item_price: float,
     item_category: str,
 ):
-    # TODO write in SQLite DB
+    
     try:
         item_menu_id = menuID(
             menu_dict, item_category
-        )  # TODO check if in Category -> item_name exists
+        )  
         menu_dict[item_menu_id] = {
             "Item": item_name,
             "Category": item_category,
@@ -73,7 +73,7 @@ def saveData(file_name: str, menu_dict: dict) -> None:
 def main():
     file_name = "acasa.json"
     test_dict = loadData(file_name)
-    # TODO admin of Menu.json
+    
     addEntry(
         test_dict,
         item_category="Auflauf",

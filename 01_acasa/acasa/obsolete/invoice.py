@@ -45,7 +45,7 @@ def printOrder(total_cost: float, listing: list):
         # print("{}. {} -> {:.2f}€ x {}".format(*entry))
     print(40 * "_")
     print(f"Total: {total_cost}€")
-    # TODO print as File
+
 
 
 def main():
