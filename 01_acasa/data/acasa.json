@@ -1,0 +1,35 @@
+{
+    "Pizza": {
+        "start": 100,
+        "end": 200
+    },
+    "100": {
+        "Item": "Pizza Margeritta",
+        "Category": "Pizza",
+        "Price": 5
+    },
+    "101": {
+        "Item": "Pizza Thunfisch",
+        "Category": "Pizza",
+        "Price": 6
+    },
+    "102": {
+        "Item": "Pizza Fungi",
+        "Category": "Pizza",
+        "Price": 7
+    },
+    "Auflauf": {
+        "start": 200,
+        "end": 300
+    },
+    "200": {
+        "Item": "Nudel",
+        "Category": "Auflauf",
+        "Price": 6.0
+    },
+    "201": {
+        "Item": "Kartoffel",
+        "Category": "Auflauf",
+        "Price": 7.0
+    }
+}
