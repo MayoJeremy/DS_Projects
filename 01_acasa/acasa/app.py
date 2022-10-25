@@ -1,12 +1,10 @@
 """
 Hauptprogramm
 """
-from cgitb import reset
 import os
 import sqlite3
 from pathlib import Path
 import json
-import pprint
 from collections import Counter
 
 os.chdir(Path(__file__).parent)
@@ -18,7 +16,7 @@ WELCOME_MSG = "Willkommen bei Acasa!"
 
 
 def get_menu():
-    sql = "SELECT  * FROM Menu;"
+    sql = "SELECT * FROM Menu;"
     cursor.execute(sql)
     return cursor.fetchall()
 
