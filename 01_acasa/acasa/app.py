@@ -108,7 +108,7 @@ def make_receipt(orders: list):
         )
         receipt_total += dish_total
 
-    return receipt, receipt_total
+    return sorted(receipt), receipt_total
 
 
 def string_receipt(receipt_items: list, receipt_total: float):
