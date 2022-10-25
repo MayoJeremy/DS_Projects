@@ -33,24 +33,31 @@ def get_menu_indexes():
 
 def string_menu(menu: str):
     menu_string = ""
+
+    def string_category(category: str):
+        return f"{category}\n" + 40 * "_" + "\n"
+
+    def string_dish(dish_info: tuple):
+        return "{}. {}\t|\t{}€\n".format(*dish_info)
+
     for _, dish in enumerate(menu):
         if not menu_string:
-            menu_string += f"{dish[2]}\n" + 40 * "_" + "\n"
-            menu_string += "{}. {}\t|\t{}€\n".format(dish[0], dish[1], dish[3])
+            menu_string += string_category(dish[2])
+            menu_string += string_dish((dish[0], dish[1], dish[3]))
             continue
         if menu[_][2] != menu[_ - 1][2]:
-            menu_string += f"\n{dish[2]}\n" + 40 * "_" + "\n"
-        menu_string += "{}. {}\t|\t{}€\n".format(dish[0], dish[1], dish[3])
+            menu_string += string_category(dish[2])
+        menu_string += string_dish((dish[0], dish[1], dish[3]))
     return menu_string
 
 
-def insert_dish(data):
+def insert_dish(data: tuple):
     sql = "INSERT INTO Menu (Dish_ID, Title, Category, Price) VALUES (?,?,?,?);"
     with conn:
         cursor.execute(sql, data)
 
 
-def import_json_db(file):
+def import_json_db(file: str):
     with open(file, "r") as f:
         menu = json.load(f)
     for category, values in menu.items():
