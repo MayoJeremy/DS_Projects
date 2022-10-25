@@ -1,5 +1,5 @@
 """Menu-file"""
-from pathlib import Path
+from pathlib import Path  # FIXME absolute-> relative pathing
 import json
 from collections import Counter
 
@@ -14,6 +14,7 @@ def addEntry(
     item_price: float,
     item_category: str,
 ):
+    # TODO write in SQLite DB
     try:
         item_menu_id = menuID(
             menu_dict, item_category
