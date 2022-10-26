@@ -7,6 +7,7 @@ from pathlib import Path
 import json
 from collections import Counter
 
+# FIXME change script to use another level higher up
 os.chdir(Path(__file__).parent)
 
 conn = sqlite3.connect("../data/store.db")
@@ -22,7 +23,7 @@ def get_menu():
 
 
 def get_menu_indexes():
-    sql = "SELECT Dish_ID From Menu;"
+    sql = "SELECT DishID From Menu;"
     cursor.execute(sql)
     result = cursor.fetchall()
     ite_result = []
@@ -35,7 +36,7 @@ def string_menu(menu: str):
     menu_string = ""
 
     def string_category(category: str):
-        return f"{category}\n" + 40 * "_" + "\n"
+        return f"\n{category}\n" + 40 * "_" + "\n"
 
     def string_dish(dish_info: tuple):
         return "{}. {}\t|\t{}€\n".format(*dish_info)
@@ -52,13 +53,13 @@ def string_menu(menu: str):
 
 
 def insert_dish(data: tuple):
-    sql = "INSERT INTO Menu (Dish_ID, Title, Category, Price) VALUES (?,?,?,?);"
+    sql = "INSERT INTO Menu (DishID, Title, Category, Price) VALUES (?,?,?,?);"
     with conn:
         cursor.execute(sql, data)
 
 
 def import_json_db(file: str):
-    with open(file, "r") as f:
+    with open(file, mode="r", encoding="UTF-8") as f:
         menu = json.load(f)
     for category, values in menu.items():
         for value in values:
@@ -97,7 +98,7 @@ def make_receipt(orders: list):
     receipt_total = 0.0
 
     def get_dish(dish_id: int):
-        sql = f"SELECT Dish_ID, Title, Price FROM Menu WHERE Dish_ID = {dish_id}"
+        sql = f"SELECT DishID, Title, Price FROM Menu WHERE DishID = {dish_id}"
         cursor.execute(sql)
         return cursor.fetchone()
 
@@ -141,14 +142,15 @@ def main():
 
     print("Ihre Bestellung")
     order = get_order()
+    print(order)
 
     receipt = make_receipt(order)
     receipt_string = string_receipt(*receipt)
     print(receipt_string)
     save_receipt(receipt_string)
 
-    conn.close()
-
 
 if __name__ == "__main__":
     main()
+
+conn.close()
