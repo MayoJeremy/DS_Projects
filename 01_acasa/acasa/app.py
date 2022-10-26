@@ -59,7 +59,7 @@ def insert_dish(data: tuple):
 
 
 def insert_order(customer_id: int, dish_id: int):
-    sql = "INSERT INTO Orders (CustomerID, DishID) VALUES (?,?);"
+    sql = "INSERT INTO 'Order' (CustomerID, DishID) VALUES (?,?);"
     with conn:
         cursor.execute(sql, (customer_id, dish_id))
 
