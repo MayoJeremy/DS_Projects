@@ -52,8 +52,8 @@ def string_menu(menu: str):
     return menu_string
 
 
-def insert_dish(data: tuple):
-    sql = "INSERT INTO Menu (DishID, Title, Category, Price) VALUES (?,?,?,?);"
+def insert_data(table: str, data: tuple):
+    sql = f"INSERT INTO {table} (DishID, Title, Category, Price) VALUES (?,?,?,?);"
     with conn:
         cursor.execute(sql, data)
 
@@ -63,14 +63,14 @@ def import_json_db(file: str):
         menu = json.load(f)
     for category, values in menu.items():
         for value in values:
-            insert_dish(
-                (
-                    value["id"],
-                    value["title"],
-                    category,
-                    value["price"],
-                )
-            )
+            insert_data("Menu",
+                        (
+                            value["id"],
+                            value["title"],
+                            category,
+                            value["price"],
+                        )
+                        )
 
 
 def get_order():
