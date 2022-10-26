@@ -12,7 +12,7 @@ os.chdir(Path(__file__).parent)
 
 conn = sqlite3.connect("../data/store.db")
 cursor = conn.cursor()
-ADMIN = 1
+ADMIN = False
 WELCOME_MSG = "Willkommen bei Acasa!"
 
 
@@ -54,6 +54,13 @@ def string_menu(menu: str):
 
 def insert_dish(data: tuple):
     sql = "INSERT INTO Menu (DishID, Title, Category, Price) VALUES (?,?,?,?);"
+    with conn:
+        cursor.execute(sql, data)
+
+
+def insert_customer(data: tuple):
+    sql = "INSERT INTO Customer (FirstName, LastName, Tel) \
+VALUES (:first_name, :last_name, :tel) ;"
     with conn:
         cursor.execute(sql, data)
 
@@ -143,8 +150,8 @@ def main():
     if ADMIN:
         file = "../data/menu.json"
         import_json_db(file)
-    # test = register_customer()
-    # print(test)
+    test = register_customer()
+    insert_customer(test)
     print(WELCOME_MSG)
     menu = get_menu()
     print(string_menu(menu))
