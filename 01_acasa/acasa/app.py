@@ -58,6 +58,12 @@ def insert_dish(data: tuple):
         cursor.execute(sql, data)
 
 
+def insert_order(customer_id: int, dish_id: int):
+    sql = "INSERT INTO Orders (CustomerID, DishID) VALUES (?,?);"
+    with conn:
+        cursor.execute(sql, (customer_id, dish_id))
+
+
 def insert_customer(data: tuple):
     sql = "INSERT INTO Customer (FirstName, LastName, Tel) \
 VALUES (:first_name, :last_name, :tel) ;"
@@ -86,7 +92,7 @@ def import_json_db(file: str):
             )
 
 
-def get_order():
+def get_order(customer_id: int):
     counter = Counter()
     order_list = []
     order = []
@@ -101,6 +107,7 @@ def get_order():
             continue
         counter[user_in] += 1
         order_list.append(user_in)
+        insert_order(customer_id, user_in)
     for order_id, order_name in counter.items():
         order.append((order_id, order_name))
     return order
@@ -168,8 +175,7 @@ def main():
     print(string_menu(menu))
 
     print("Ihre Bestellung")
-    order = get_order()
-    print(order)
+    order = get_order(customer_id)
 
     receipt = make_receipt(order)
     receipt_string = string_receipt(*receipt)
