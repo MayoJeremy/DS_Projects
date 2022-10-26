@@ -7,13 +7,16 @@ from pathlib import Path
 import json
 from collections import Counter
 
-# FIXME change script to use another level higher up
 os.chdir(Path(__file__).parent)
 
 conn = sqlite3.connect("../data/store.db")
 cursor = conn.cursor()
 ADMIN = False
 WELCOME_MSG = "Willkommen bei Acasa!"
+MODES = {"dish": "INSERT INTO Menu (DishID, Title, Category, Price) VALUES (?,?,?,?);",
+         "order": "INSERT INTO 'Order' (CustomerID, DishID) VALUES (?,?);",
+         "customer": "INSERT INTO Customer (FirstName, LastName, Tel) VALUES (:first_name, :last_name, :tel) ;",
+         }
 
 
 def get_menu():
@@ -52,23 +55,12 @@ def string_menu(menu: str):
     return menu_string
 
 
-def insert_dish(data: tuple):
-    sql = "INSERT INTO Menu (DishID, Title, Category, Price) VALUES (?,?,?,?);"
+def insert_data(mode: str, data: tuple):
     with conn:
-        cursor.execute(sql, data)
+        cursor.execute(MODES.get(mode.lower()), data)
 
 
-def insert_order(customer_id: int, dish_id: int):
-    sql = "INSERT INTO 'Order' (CustomerID, DishID) VALUES (?,?);"
-    with conn:
-        cursor.execute(sql, (customer_id, dish_id))
 
-
-def insert_customer(data: tuple):
-    sql = "INSERT INTO Customer (FirstName, LastName, Tel) \
-VALUES (:first_name, :last_name, :tel) ;"
-    with conn:
-        cursor.execute(sql, data)
 
 
 def get_customer_id(data: tuple):
@@ -82,14 +74,15 @@ def import_json_db(file: str):
         menu = json.load(f)
     for category, values in menu.items():
         for value in values:
-            insert_dish(
-                (
-                    value["id"],
-                    value["title"],
-                    category,
-                    value["price"],
-                )
-            )
+            insert_data("dish",
+                        (
+                            value["id"],
+                            value["title"],
+                            category,
+                            value["price"],
+                        )
+                        )
+            
 
 
 def get_order(customer_id: int):
@@ -107,7 +100,7 @@ def get_order(customer_id: int):
             continue
         counter[user_in] += 1
         order_list.append(user_in)
-        insert_order(customer_id, user_in)
+        insert_data("order", (customer_id, user_in))
     for order_id, order_name in counter.items():
         order.append((order_id, order_name))
     return order
@@ -166,7 +159,7 @@ def main():
 
     print(WELCOME_MSG)
     customer = register_customer()
-    insert_customer(customer)
+    insert_data("customer", customer)
     customer_id = get_customer_id(customer)
 
     print()
