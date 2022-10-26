@@ -65,6 +65,12 @@ VALUES (:first_name, :last_name, :tel) ;"
         cursor.execute(sql, data)
 
 
+def get_customer_id(data: tuple):
+    sql = "SELECT CustomerID FROM Customer WHERE FirstName = :first_name AND LastName = :last_name AND Tel = :tel "
+    cursor.execute(sql, data)
+    return cursor.fetchone()[0]
+
+
 def import_json_db(file: str):
     with open(file, mode="r", encoding="UTF-8") as f:
         menu = json.load(f)
@@ -150,9 +156,14 @@ def main():
     if ADMIN:
         file = "../data/menu.json"
         import_json_db(file)
-    test = register_customer()
-    insert_customer(test)
+
     print(WELCOME_MSG)
+    customer = register_customer()
+    insert_customer(customer)
+    customer_id = get_customer_id(customer)
+
+    print()
+
     menu = get_menu()
     print(string_menu(menu))
 
