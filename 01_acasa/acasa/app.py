@@ -12,7 +12,7 @@ os.chdir(Path(__file__).parent)
 
 conn = sqlite3.connect("../data/store.db")
 cursor = conn.cursor()
-ADMIN = False
+ADMIN = 1
 WELCOME_MSG = "Willkommen bei Acasa!"
 
 
@@ -52,8 +52,8 @@ def string_menu(menu: str):
     return menu_string
 
 
-def insert_data(table: str, data: tuple):
-    sql = f"INSERT INTO {table} (DishID, Title, Category, Price) VALUES (?,?,?,?);"
+def insert_dish(data: tuple):
+    sql = "INSERT INTO Menu (DishID, Title, Category, Price) VALUES (?,?,?,?);"
     with conn:
         cursor.execute(sql, data)
 
@@ -63,14 +63,14 @@ def import_json_db(file: str):
         menu = json.load(f)
     for category, values in menu.items():
         for value in values:
-            insert_data("Menu",
-                        (
-                            value["id"],
-                            value["title"],
-                            category,
-                            value["price"],
-                        )
-                        )
+            insert_dish(
+                (
+                    value["id"],
+                    value["title"],
+                    category,
+                    value["price"],
+                )
+            )
 
 
 def get_order():
@@ -131,11 +131,20 @@ def save_receipt(receipt: str):
         file.write(receipt.strip())
 
 
+def register_customer():
+    datapoints = ["first_name", "last_name", "tel"]
+    customer = {}
+    for datapoint in datapoints:
+        customer[datapoint] = input(f"{datapoint.title()}: ")
+    return customer
+
+
 def main():
     if ADMIN:
         file = "../data/menu.json"
         import_json_db(file)
-
+    # test = register_customer()
+    # print(test)
     print(WELCOME_MSG)
     menu = get_menu()
     print(string_menu(menu))
