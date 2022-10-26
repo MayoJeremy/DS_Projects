@@ -56,11 +56,9 @@ def string_menu(menu: str):
 
 
 def insert_data(mode: str, data: tuple):
+    # TODO Check if entry in Customer Table exists -> Update instead of new Dataentry
     with conn:
         cursor.execute(MODES.get(mode.lower()), data)
-
-
-
 
 
 def get_customer_id(data: tuple):
@@ -82,7 +80,6 @@ def import_json_db(file: str):
                             value["price"],
                         )
                         )
-            
 
 
 def get_order(customer_id: int):
@@ -101,9 +98,40 @@ def get_order(customer_id: int):
         counter[user_in] += 1
         order_list.append(user_in)
         insert_data("order", (customer_id, user_in))
-    for order_id, order_name in counter.items():
-        order.append((order_id, order_name))
+    for order_id, order_amount in counter.items():
+        order.append((order_id, order_amount))
     return order
+
+
+def get_customer_orders(customer_id: int):
+    orders = []
+
+    def get_customer_items():
+        sql = "SELECT Distinct DishID \
+FROM Menu \
+LEFT JOIN 'Order' using (DishID) \
+LEFT JOIN Customer using(CustomerID) \
+WHERE CustomerID = ? \
+;"
+        cursor.execute(sql, [customer_id])
+        return sorted(cursor.fetchall())
+
+    def get_customer_items_counted(orders: list):
+        result = []
+
+        sql = "SELECT Count(*) \
+FROM Menu \
+LEFT JOIN 'Order' using (DishID) \
+LEFT JOIN Customer using(CustomerID) \
+WHERE CustomerID = ? and DishID = ?  \
+;"
+        for order in orders:
+            cursor.execute(sql, [customer_id, order[0]])
+            result.append((order[0], cursor.fetchone()[0]))
+        return result
+
+    orders = get_customer_items()
+    return get_customer_items_counted(orders)
 
 
 def make_receipt(orders: list):
@@ -161,6 +189,7 @@ def main():
     customer = register_customer()
     insert_data("customer", customer)
     customer_id = get_customer_id(customer)
+    customer_history = get_customer_orders(customer_id)
 
     print()
 
