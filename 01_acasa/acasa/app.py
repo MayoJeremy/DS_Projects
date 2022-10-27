@@ -62,7 +62,8 @@ def insert_data(mode: str, data: tuple):
 
 
 def get_customer_id(data: tuple):
-    sql = "SELECT CustomerID FROM Customer WHERE FirstName = :first_name AND LastName = :last_name AND Tel = :tel "
+    sql = "SELECT CustomerID FROM Customer WHERE FirstName = :first_name \
+        AND LastName = :last_name AND Tel = :tel "
     cursor.execute(sql, data)
     return cursor.fetchone()[0]
 
@@ -182,7 +183,8 @@ def register_customer():
 
 
 def get_customer_reg(customer: dict):
-    sql = "SELECT COUNT(*) FROM Customer WHERE FirstName = :first_name AND LastName = :last_name AND Tel = :tel "
+    sql = "SELECT COUNT(*) FROM Customer WHERE FirstName = :first_name \
+        AND LastName = :last_name AND Tel = :tel "
     cursor.execute(sql, customer)
     return cursor.fetchone()[0]
 
@@ -194,12 +196,12 @@ def main():
 
     print(WELCOME_MSG)
     customer = register_customer()
-    customer_id = get_customer_id(customer)
     if get_customer_reg(customer):
         print("Welcome Back")
         # order_history = get_customer_orders(customer_id)
     else:
         insert_data("customer", customer)
+    customer_id = get_customer_id(customer)
 
     print()
 
