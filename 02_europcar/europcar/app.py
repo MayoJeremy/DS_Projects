@@ -25,7 +25,7 @@ WHERE StatusID = ? AND Brand.Title = ?\
 
 def get_brands():
     brand_names = []
-    sql = "SELECT title FROM Brand"
+    sql = "SELECT title FROM Brand;"
     cursor.execute(sql)
     for brand in cursor.fetchall():
         brand_names.append(brand[0])
@@ -33,9 +33,22 @@ def get_brands():
 
 
 def get_user_order():
-    user_model = input("Which Car do you want to order (Number): ")
+    user_car = input("Which Car do you want to order (Number): ")
     user_days = input("For how long: ")
-    return int(user_model), int(user_days)
+    return int(user_car), int(user_days)
+
+
+def calc_total(user_car: int, user_days: int):
+    sql = "SELECT DayPrice FROM Car WHERE CarID = ?;"
+    cursor.execute(sql, [user_car])
+    day_price = cursor.fetchone()
+    return user_days * day_price[0]
+
+
+def updating_availability(change_to: int, user_car: int):
+    sql = "UPDATE Car SET StatusID = ? WHERE CarID = ?;"
+    with conn:
+        cursor.execute(sql, [change_to, user_car])
 
 
 def main():
@@ -45,6 +58,8 @@ def main():
         print("\n", get_catalog_string(_))
 
     user_input = get_user_order()
+    print("Your Total is: {}€".format(calc_total(*user_input)))
+    updating_availability(2, user_input[0])
 
 
 if __name__ == "__main__":
