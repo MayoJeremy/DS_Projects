@@ -13,10 +13,11 @@ conn = sqlite3.connect("../data/store.db")
 cursor = conn.cursor()
 ADMIN = False
 WELCOME_MSG = "Willkommen bei Acasa!"
-MODES = {"dish": "INSERT INTO Menu (DishID, Title, Category, Price) VALUES (?,?,?,?);",
-         "order": "INSERT INTO 'Order' (CustomerID, DishID) VALUES (?,?);",
-         "customer": "INSERT INTO Customer (FirstName, LastName, Tel) VALUES (:first_name, :last_name, :tel) ;",
-         }
+MODES = {
+    "dish": "INSERT INTO Menu (DishID, Title, Category, Price) VALUES (?,?,?,?);",
+    "order": "INSERT INTO 'Order' (CustomerID, DishID) VALUES (?,?);",
+    "customer": "INSERT INTO Customer (FirstName, LastName, Tel) VALUES (:first_name, :last_name, :tel) ;",
+}
 
 
 def get_menu():
@@ -56,7 +57,6 @@ def string_menu(menu: str):
 
 
 def insert_data(mode: str, data: tuple):
-    # TODO Check if entry in Customer Table exists -> Update instead of new Dataentry
     with conn:
         cursor.execute(MODES.get(mode.lower()), data)
 
@@ -72,14 +72,15 @@ def import_json_db(file: str):
         menu = json.load(f)
     for category, values in menu.items():
         for value in values:
-            insert_data("dish",
-                        (
-                            value["id"],
-                            value["title"],
-                            category,
-                            value["price"],
-                        )
-                        )
+            insert_data(
+                "dish",
+                (
+                    value["id"],
+                    value["title"],
+                    category,
+                    value["price"],
+                ),
+            )
 
 
 def get_order(customer_id: int):
@@ -180,6 +181,12 @@ def register_customer():
     return customer
 
 
+def get_customer_reg(customer: dict):
+    sql = "SELECT COUNT(*) FROM Customer WHERE FirstName = :first_name AND LastName = :last_name AND Tel = :tel "
+    cursor.execute(sql, customer)
+    return cursor.fetchone()[0]
+
+
 def main():
     if ADMIN:
         file = "../data/menu.json"
@@ -187,9 +194,12 @@ def main():
 
     print(WELCOME_MSG)
     customer = register_customer()
-    insert_data("customer", customer)
     customer_id = get_customer_id(customer)
-    customer_history = get_customer_orders(customer_id)
+    if get_customer_reg(customer):
+        print("Welcome Back")
+        # order_history = get_customer_orders(customer_id)
+    else:
+        insert_data("customer", customer)
 
     print()
 
