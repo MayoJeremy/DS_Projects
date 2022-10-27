@@ -6,6 +6,7 @@ os.chdir(Path(__file__).parent.parent)
 conn = sqlite3.connect("./data/europcar.db")
 cursor = conn.cursor()
 GREETING_MSG = "Welcome to Europcar!"
+RESET_AVAIL = False
 
 
 def get_catalog_string(brand: str, availability: int = 1) -> str:
@@ -46,12 +47,14 @@ def calc_total(user_car: int, user_days: int):
 
 
 def updating_availability(change_to: int, user_car: int):
-    sql = "UPDATE Car SET StatusID = ? WHERE CarID = ?;"
+    sql = "UPDATE Car SET StatusID = ? WHERE CarID LIKE ?;"
     with conn:
         cursor.execute(sql, [change_to, user_car])
 
 
 def main():
+    if RESET_AVAIL:
+        updating_availability(1, "%")
     print(GREETING_MSG)
 
     for _ in get_brands():
@@ -59,7 +62,8 @@ def main():
 
     user_input = get_user_order()
     print("Your Total is: {}€".format(calc_total(*user_input)))
-    updating_availability(2, user_input[0])
+    if user_input[1]:
+        updating_availability(2, user_input[0])
 
 
 if __name__ == "__main__":
