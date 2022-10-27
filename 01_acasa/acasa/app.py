@@ -1,6 +1,7 @@
 """
 Hauptprogramm
 """
+# TODO Documentation
 import os
 import sqlite3
 from pathlib import Path
@@ -9,15 +10,19 @@ from collections import Counter
 
 os.chdir(Path(__file__).parent)
 
-conn = sqlite3.connect("../data/store.db")
-cursor = conn.cursor()
-ADMIN = False
+insert_data_json = False
 WELCOME_MSG = "Willkommen bei Acasa!"
 MODES = {
     "dish": "INSERT INTO Menu (DishID, Title, Category, Price) VALUES (?,?,?,?);",
     "order": "INSERT INTO 'Order' (CustomerID, DishID) VALUES (?,?);",
     "customer": "INSERT INTO Customer (FirstName, LastName, Tel) VALUES (:first_name, :last_name, :tel) ;",
 }
+
+# paths
+
+
+conn = sqlite3.connect("../data/store.db")
+cursor = conn.cursor()
 
 
 def get_menu():
@@ -33,7 +38,7 @@ def get_menu_indexes():
     ite_result = []
     for r in result:
         ite_result.append(r[0])
-    return ite_result
+    return ite_result  # TODO variable name
 
 
 def string_menu(menu: str):
@@ -69,8 +74,9 @@ def get_customer_id(data: tuple):
 
 
 def import_json_db(file: str):
-    with open(file, mode="r", encoding="UTF-8") as f:
-        menu = json.load(f)
+    with open(file, mode="r", encoding="UTF-8") as file_in:
+        menu = json.load(file_in)
+
     for category, values in menu.items():
         for value in values:
             insert_data(
@@ -84,13 +90,13 @@ def import_json_db(file: str):
             )
 
 
-def get_order(customer_id: int):
+def get_order_from_user(customer_id: int):
     counter = Counter()
     order_list = []
     order = []
     accepted_items = get_menu_indexes()
 
-    while 1:
+    while True:
         user_in = int(input("0 to quit | choice >> "))
         if not user_in:
             break
@@ -99,7 +105,9 @@ def get_order(customer_id: int):
             continue
         counter[user_in] += 1
         order_list.append(user_in)
-        insert_data("order", (customer_id, user_in))
+        insert_data(
+            "order", (customer_id, user_in)
+        )  # FIXME Functionresponsibilities splitting
     for order_id, order_amount in counter.items():
         order.append((order_id, order_amount))
     return order
@@ -136,14 +144,15 @@ WHERE CustomerID = ? and DishID = ?  \
     return get_customer_items_counted(orders)
 
 
+def get_dish(dish_id: int):
+    sql = f"SELECT DishID, Title, Price FROM Menu WHERE DishID = {dish_id}"
+    cursor.execute(sql)
+    return cursor.fetchone()
+
+
 def make_receipt(orders: list):
     receipt = []
-    receipt_total = 0.0
-
-    def get_dish(dish_id: int):
-        sql = f"SELECT DishID, Title, Price FROM Menu WHERE DishID = {dish_id}"
-        cursor.execute(sql)
-        return cursor.fetchone()
+    receipt_total = 0
 
     for order in orders:
         dish = get_dish(order[0])
@@ -156,8 +165,8 @@ def make_receipt(orders: list):
             )
         )
         receipt_total += dish_total
-
-    return sorted(receipt), receipt_total
+    receipt_total = round(receipt_total, 2)
+    return sorted(receipt), receipt_total  # Memory issues double receipt list
 
 
 def string_receipt(receipt_items: list, receipt_total: float):
@@ -165,20 +174,20 @@ def string_receipt(receipt_items: list, receipt_total: float):
     for row in receipt_items:
         message += row + "\n"
     message += 40 * "*" + "\n"
-    message += f"Total: {receipt_total:.2f} €\n"
+    message += f"Total: {receipt_total} €\n"
     return message
 
 
 def save_receipt(receipt: str):
     with open("../data/receipt.txt", "w", encoding="UTF-8") as file:
-        file.write(receipt.strip())
+        file.write(receipt.strip())  # strip in makereceipt
 
 
 def register_customer():
     datapoints = ["first_name", "last_name", "tel"]
     customer = {}
     for datapoint in datapoints:
-        customer[datapoint] = input(f"{datapoint.title()}: ")
+        customer[datapoint] = input(f"Enter your {datapoint.title()}: ")
     return customer
 
 
@@ -190,7 +199,7 @@ def get_customer_reg(customer: dict):
 
 
 def main():
-    if ADMIN:
+    if insert_data_json:
         file = "../data/menu.json"
         import_json_db(file)
 
@@ -209,7 +218,7 @@ def main():
     print(string_menu(menu))
 
     print("Ihre Bestellung")
-    order = get_order(customer_id)
+    order = get_order_from_user(customer_id)
 
     receipt = make_receipt(order)
     receipt_string = string_receipt(*receipt)
