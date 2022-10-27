@@ -34,9 +34,19 @@ def get_brands():
 
 
 def get_user_order():
-    user_car = input("Which Car do you want to order (Number): ")
-    user_days = input("For how long: ")
-    return int(user_car), int(user_days)
+    while True:
+        user_car = int(input("Which Car do you want to order (Number): "))
+
+        if is_available(user_car):
+            break
+    user_days = int(input("For how long: "))
+    return user_car, user_days
+
+
+def is_available(car_id: int):
+    sql = "SELECT COUNT(*) FROM Car WHERE CarID = ? AND StatusID = 1;"
+    cursor.execute(sql, [car_id])
+    return cursor.fetchone()[0]
 
 
 def calc_total(user_car: int, user_days: int):
