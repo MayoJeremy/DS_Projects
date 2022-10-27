@@ -32,10 +32,19 @@ def get_brands():
     return brand_names
 
 
+def get_user_order():
+    user_model = input("Which Car do you want to order (Number): ")
+    user_days = input("For how long: ")
+    return int(user_model), int(user_days)
+
+
 def main():
     print(GREETING_MSG)
+
     for _ in get_brands():
         print("\n", get_catalog_string(_))
+
+    user_input = get_user_order()
 
 
 if __name__ == "__main__":
