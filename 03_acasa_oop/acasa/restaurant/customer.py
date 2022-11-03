@@ -22,6 +22,9 @@ class Customer:
         self.conn.commit()
         self.customer_id = self.cursor.lastrowid
 
+    def __repr__(self) -> str:
+        return f"{self.first_name}, {self.last_name}\nTel: {self.tel}\nKNr {self.customer_id}"
+
 
 def main():
     pass
