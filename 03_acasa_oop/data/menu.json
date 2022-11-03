@@ -1,0 +1,20 @@
+{
+    "Pizza" : [
+        {"id": 100, "title": "Pizza Margeritta", "price": 5},
+        {"id": 101, "title": "Pizza Tunfisch", "price": 5},
+        {"id": 102, "title": "Pizza Fungi", "price": 5}
+
+    ],
+
+
+    "Auflauf": [
+        {"id": 200, "title": "Auflauf Kartoffeln", "price": 5},
+        {"id": 201, "title": "Auflauf Nudeln", "price": 5}        
+
+    ],
+
+    "Salat": [
+        {"id": 300, "title": "Salat Normal ", "price": 15},
+        {"id": 301, "title": "Salat Kaiser ", "price": 15}
+    ]
+}
