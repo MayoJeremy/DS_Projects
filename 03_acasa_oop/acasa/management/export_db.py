@@ -1,7 +1,7 @@
 import os
 import sqlite3
 from pathlib import Path
-from json_import import JsonImporter
+from acasa.management.json_import import JsonImporter
 
 os.chdir(Path(__file__).parent.parent.parent)
 

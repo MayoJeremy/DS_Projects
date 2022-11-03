@@ -1,8 +1,8 @@
 import os
 import sqlite3
 from pathlib import Path
-from customer import Customer
-from dish import Pizza
+from acasa.restaurant.customer import Customer
+from acasa.restaurant.dish import Pizza
 
 os.chdir(Path(__file__).parent.parent.parent)
 
