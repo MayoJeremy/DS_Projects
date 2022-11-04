@@ -4,7 +4,7 @@ Hauptprogramm Neuversuch
 from acasa.restaurant.menu import Menu
 from acasa.restaurant.customer import Customer
 from acasa.restaurant.order import Order
-from acasa.management.export_db import SQLExporter
+from acasa.management.export_db import SQLHandler
 
 
 WELCOME_MSG = "Welcome to Acasa Restaurant"
@@ -39,7 +39,7 @@ def get_customer_order_list(menu: Menu):
 
 
 def main():
-    db_exporter = SQLExporter(DB_NAME, {})
+    db_exporter = SQLHandler(DB_NAME)
     menu = Menu(DB_NAME)
     menu.import_menu_items_from_db()
     menu.initialize_menu_items()
@@ -48,13 +48,13 @@ def main():
     print(WELCOME_MSG)
     print()
 
-    customer = Customer(*get_customer_info(), DB_NAME)
+    customer = Customer(*get_customer_info())
     customer.customer_id = db_exporter.input_customer_and_retrieve_customer_id(customer)
 
     menu.print_menu()
     cust_order_list = get_customer_order_list(menu)
-    cust_order = Order(customer, cust_order_list, DB_NAME)
-    cust_order.process_dish_orders()
+    cust_order = Order(customer, cust_order_list)
+    db_exporter.input_order(cust_order)
     cust_order.print_receipt()
 
 

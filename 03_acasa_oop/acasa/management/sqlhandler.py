@@ -1,7 +1,7 @@
 import sqlite3
 
 
-class SQLExporter:
+class SQLHandler:
     def __init__(self, db_name: str) -> None:
         self.conn = sqlite3.connect("./data/" + db_name)
         self.cursor = self.conn.cursor()
@@ -38,14 +38,10 @@ class SQLExporter:
         self.conn.commit()
         return self.cursor.lastrowid
 
-
-def main():
-    # dbImport = JsonImporter("menu.json")
-    # dbImport.get_content()
-    # sExport = SQLExporter("acasa.db", dbImport.menu)
-    # sExport.insert_dish_json_dict()
-    pass
-
-
-if __name__ == "__main__":
-    main()
+    def input_order(self, order):
+        sql = "INSERT INTO 'Order' (CustomerID, DishID) VALUES (?,?);"
+        data = []
+        for dish_order in order.dish_order_list:
+            data.append((order.customer.customer_id, dish_order.dish_id))
+        self.cursor.executemany(sql, data)
+        self.conn.commit()
