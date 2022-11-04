@@ -13,7 +13,9 @@ class SQLHandler:
         return self.cursor.fetchall()
 
     def insert_dish_json_dict(self, json_file):
-        sql = "INSERT INTO Menu (DishID, Title, Category, Price) VALUES (?,?,?,?);"
+        sql = """
+        INSERT INTO Menu (DishID, Title, Category, Price) VALUES (?,?,?,?);
+        """
         data = []
         for category, dishes in json_file.items():
             for dish in dishes:
