@@ -1,22 +1,19 @@
 """
 Hauptprogramm Neuversuch
 """
+import os
 from acasa.restaurant.menu import Menu
 from acasa.restaurant.customer import Customer
 from acasa.restaurant.order import Order
-from acasa.management.export_db import SQLHandler
+from acasa.management.sqlhandler import SQLHandler
+from pathlib import Path
+
+
+os.chdir(Path(__file__).parent)
 
 
 WELCOME_MSG = "Welcome to Acasa Restaurant"
 DB_NAME = "acasa.db"
-
-
-def get_customer_info():
-    first_name = input("Enter your first name: ")
-    last_name = input("Enter your last name: ")
-    tel = input("Enter your telephone: ")
-
-    return first_name, last_name, tel
 
 
 def get_customer_order_list(menu: Menu):
@@ -40,15 +37,20 @@ def get_customer_order_list(menu: Menu):
 
 def main():
     db_exporter = SQLHandler(DB_NAME)
-    menu = Menu(DB_NAME)
-    menu.import_menu_items_from_db()
+    menu_import = db_exporter.import_menu_items_from_db()
+    menu = Menu(menu_import)
+
     menu.initialize_menu_items()
-    # print(menu.menu)
 
     print(WELCOME_MSG)
     print()
 
-    customer = Customer(*get_customer_info())
+    is_reg = int(input("0 | new User\nID | existing User >>"))
+    if is_reg:
+        cust_data = db_exporter.get_customer_data(is_reg)
+        customer = Customer(*cust_data)
+    else:
+        customer = Customer.get_customer_info()
     customer.customer_id = db_exporter.input_customer_and_retrieve_customer_id(customer)
 
     menu.print_menu()
@@ -56,6 +58,8 @@ def main():
     cust_order = Order(customer, cust_order_list)
     db_exporter.input_order(cust_order)
     cust_order.print_receipt()
+
+    db_exporter.conn.close()
 
 
 if __name__ == "__main__":

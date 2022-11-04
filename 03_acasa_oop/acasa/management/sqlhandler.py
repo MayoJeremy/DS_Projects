@@ -3,8 +3,14 @@ import sqlite3
 
 class SQLHandler:
     def __init__(self, db_name: str) -> None:
-        self.conn = sqlite3.connect("./data/" + db_name)
+        self.db_name = db_name
+        self.conn = sqlite3.connect("./data/" + self.db_name)
         self.cursor = self.conn.cursor()
+
+    def import_menu_items_from_db(self):
+        sql = "SELECT * FROM Menu;"
+        self.cursor.execute(sql)
+        return self.cursor.fetchall()
 
     def insert_dish_json_dict(self, json_file):
         sql = "INSERT INTO Menu (DishID, Title, Category, Price) VALUES (?,?,?,?);"
@@ -37,6 +43,15 @@ class SQLHandler:
         self.cursor.execute(sql, customer.__dict__)
         self.conn.commit()
         return self.cursor.lastrowid
+
+    def get_customer_data(self, customer_id: int):
+        sql = """
+        SELECT FirstName, LastName, Tel
+        FROM Customer
+        WHERE CustomerID = ?
+        """
+        self.cursor.execute(sql, (customer_id,))
+        return self.cursor.fetchone()
 
     def input_order(self, order):
         sql = "INSERT INTO 'Order' (CustomerID, DishID) VALUES (?,?);"
