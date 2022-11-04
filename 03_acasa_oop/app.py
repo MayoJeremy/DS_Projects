@@ -51,7 +51,7 @@ def main():
         customer = Customer(*cust_data)
     else:
         customer = Customer.get_customer_info_and_make_customer()
-    customer.customer_id = db_exporter.input_customer_and_retrieve_customer_id(customer)
+        customer.customer_id = db_exporter.input_customer_and_retrieve_customer_id(customer)
 
     menu.print_menu()
     cust_order_list = get_customer_order_list(menu)
