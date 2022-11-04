@@ -50,7 +50,7 @@ def main():
         cust_data = db_exporter.get_customer_data(is_reg)
         customer = Customer(*cust_data)
     else:
-        customer = Customer.get_customer_info()
+        customer = Customer.get_customer_info_and_make_customer()
     customer.customer_id = db_exporter.input_customer_and_retrieve_customer_id(customer)
 
     menu.print_menu()

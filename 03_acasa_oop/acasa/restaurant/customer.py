@@ -6,7 +6,7 @@ class Customer:
         self.customer_id = customer_id
 
     @staticmethod
-    def get_customer_info():
+    def get_customer_info_and_make_customer():
         first_name = input("Enter your first name: ")
         last_name = input("Enter your last name: ")
         tel = input("Enter your telephone: ")
