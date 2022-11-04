@@ -2,7 +2,7 @@ import os
 import sqlite3
 from pathlib import Path
 from acasa.restaurant.customer import Customer
-from acasa.restaurant.dish import Pizza
+from acasa.restaurant.dish import Dish
 
 os.chdir(Path(__file__).parent.parent.parent)
 
@@ -37,11 +37,12 @@ class Order:
 
 
 def main():
-    test_Customer = Customer("Test", "Mest", "+49151515151", "acasa.db", 1)
-    test_Customer.input_customer()
-    test_order = Order(test_Customer, [(Pizza(100, "Pizza Margeritta", 5))], "acasa.db")
-    test_order.print_receipt()
-    test_order.input_order()
+    # test_Customer = Customer("Test", "Mest", "+49151515151", "acasa.db", 1)
+    # test_Customer.input_customer()
+    # test_order = Order(test_Customer, [(Pizza(100, "Pizza Margeritta", 5))], "acasa.db")
+    # test_order.print_receipt()
+    # test_order.input_order()
+    pass
 
 
 if __name__ == "__main__":
