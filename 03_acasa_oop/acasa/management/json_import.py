@@ -13,7 +13,7 @@ class JsonImporter:
         Args:
             file (str): Path + Filename to import
         """
-        self.file = file  # "./data/menu.json"
+        self.file = "./data/" + file  # "./data/menu.json"
 
     def get_content(self):
         """loads Jsonfile into instance based variable 'menu'"""
