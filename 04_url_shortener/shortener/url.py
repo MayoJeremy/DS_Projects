@@ -5,14 +5,16 @@ class Url:
         self.url_id = url_id
         self.domain_name = domain_name
         self.original_url = original_url
-        self.short_url = short_url
+        self.short_url = Url.base_url + "/" + short_url
         self.user_id = user_id
 
     def __repr__(self) -> str:
-        return f"https://{self.domain_name}/{self.short_url}"
+        return f"{self.short_url}"
 
     @classmethod
     def create_new_url_via_input(cls, short_url, user_id):
-        original_url = input("Url to shorten >> ").split("//")[1]
-        domain_name = original_url.split("/")[0]
+        original_url = input("Url to shorten >> ")
+        domain_name = original_url.split("//")[1].split("/")[0].split(".")[-2]
+        if domain_name.startswith("www."):
+            domain_name = domain_name[4:]
         return Url(domain_name, original_url, short_url, user_id)

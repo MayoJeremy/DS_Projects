@@ -42,6 +42,7 @@ def new_url(user: User):
     print("New URL")
     short_url = DBX.get_new_random_short_url()
     new_url = Url.create_new_url_via_input(short_url, user.user_id)
+    print(new_url)
     url_id = DBX.save_url_to_db_and_get_url_id(new_url)
     new_url.url_id = url_id
 
