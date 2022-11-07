@@ -64,7 +64,12 @@ class Dbman:
         self.db.commit()
         return self.cursor.lastrowid
 
-    def get_new_random_short_url(self):
+    def get_new_random_short_url(self) -> str:
+        """Generates new url and checks if its unique in DB
+
+        Returns:
+            str: Newly generated Url
+        """
         sql = "SELECT * FROM url WHERE ShortUrL = %s"
         while True:
             new_short_url = "".join(str(randint(0, 9)) for _ in range(5))
@@ -74,7 +79,16 @@ class Dbman:
             except TypeError:
                 return new_short_url
 
-    def get_all_urls_formatted(self, user_id: int) -> None:
+    def get_all_urls_formatted(self, user_id: int) -> list[str]:
+        """Retrieves every Url a User has registered
+
+        Args:
+            user_id(int): UserID to identify
+
+        Returns:
+            list[str]: List of (Domain, Shortened Url, Username)
+        """
+
         sql = """
             SELECT DomainName, ShortUrl, Username
             FROM url

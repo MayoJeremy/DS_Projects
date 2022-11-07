@@ -10,6 +10,15 @@ DBX = Dbman()
 
 
 def user_login() -> User:
+
+    """
+    Prompts user to input username and passwort. Loops
+    until Login successful and Userobject created.
+
+    Returns:
+        User: Logged in Userobject
+    """
+
     print("Loginmask!\n")
     while True:
         username = input("Username >> ")
@@ -21,7 +30,15 @@ def user_login() -> User:
             print("Wrong credentials. Try again\n")
 
 
-def get_mode():
+def get_mode() -> int:
+    """
+    Prompts user to input desired Mode via integer. Loops
+    until viable Mode is selected
+
+    Returns:
+        int: Selected Mode
+
+    """
     print("Mainmenu")
     while True:
         mode = int(
@@ -39,6 +56,11 @@ def get_mode():
 
 
 def new_url(user: User):
+    """Generates new Url Object
+
+    Args:
+        user (User): Logged in User
+    """
     print("New URL")
     short_url = DBX.get_new_random_short_url()
     new_url = Url.create_new_url_via_input(short_url, user.user_id)
