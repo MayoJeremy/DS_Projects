@@ -1,4 +1,5 @@
 import mysql.connector
+from random import randint
 
 
 class Dbman:
@@ -44,7 +45,7 @@ class Dbman:
         self.cursor.execute(sql, (user_id,))
         return self.cursor.fetchall()
 
-    def save_url_to_db(self, user_urL):
+    def save_url_to_db_and_get_url_id(self, user_urL):
         sql = """
         INSERT INTO url (DomainName, OriginalUrL, ShortUrL, UserID)
         VALUES (%s,%s,%s,%s)
@@ -52,3 +53,14 @@ class Dbman:
 
         self.cursor.execute(sql, (user_urL))
         self.db.commit()
+        return self.cursor.lastrowid()
+
+    def get_new_random_short_url(self):
+        sql = "SELECT * FROM url WHERE ShortUrL = %s"
+        while True:
+            new_short_url = "".join(str(randint(0, 9)) for _ in range(5))
+            self.cursor.execute(sql, (new_short_url,))
+            try:
+                self.cursor.fetchone()[0]
+            except TypeError:
+                return new_short_url
