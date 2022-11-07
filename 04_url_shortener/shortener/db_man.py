@@ -1,5 +1,6 @@
 import mysql.connector
 from random import randint
+from shortener.url import Url
 
 
 class Dbman:
@@ -45,15 +46,23 @@ class Dbman:
         self.cursor.execute(sql, (user_id,))
         return self.cursor.fetchall()
 
-    def save_url_to_db_and_get_url_id(self, user_urL):
+    def save_url_to_db_and_get_url_id(self, user_urL: Url):
         sql = """
         INSERT INTO url (DomainName, OriginalUrL, ShortUrL, UserID)
         VALUES (%s,%s,%s,%s)
         """
 
-        self.cursor.execute(sql, (user_urL))
+        self.cursor.execute(
+            sql,
+            [
+                user_urL.domain_name,
+                user_urL.original_url,
+                user_urL.short_url,
+                user_urL.user_id,
+            ],
+        )
         self.db.commit()
-        return self.cursor.lastrowid()
+        return self.cursor.lastrowid
 
     def get_new_random_short_url(self):
         sql = "SELECT * FROM url WHERE ShortUrL = %s"
@@ -64,3 +73,23 @@ class Dbman:
                 self.cursor.fetchone()[0]
             except TypeError:
                 return new_short_url
+
+    def get_all_urls_formatted(self, user_id: int) -> None:
+        sql = """
+            SELECT DomainName, ShortUrl, Username
+            FROM url
+            INNER JOIN user
+            USING (UserID)
+            WHERE UserID = %s
+        """
+        self.cursor.execute(sql, (user_id,))
+        return self.cursor.fetchall()
+
+    def short_url_lookup(self, short_url: str):
+        sql = """
+            SELECT OriginalUrl
+            FROM url
+            WHERE ShortUrL = %s
+        """
+        self.cursor.execute(sql, (short_url,))
+        return self.cursor.fetchone()[0]
