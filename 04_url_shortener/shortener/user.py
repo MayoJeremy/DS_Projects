@@ -12,6 +12,12 @@ class User:
     def __repr__(self) -> str:
         return f"{self.user_id}, {self.user_name}"
 
+    @staticmethod
+    def get_user_id_from_db(user_name: str, user_password: str):
+        db = Dbman()
+        sql = "SELECT UserID FROM user WHERE Username = %s AND Password = %s"
+        return db.get_one_entry(sql, (user_name, user_password))
+
     def get_all_saved_urls(self):
         sql = """
             SELECT DomainName, ShortUrl, Username

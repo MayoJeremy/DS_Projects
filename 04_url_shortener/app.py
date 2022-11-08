@@ -23,7 +23,7 @@ def user_login() -> User:
     while True:
         username = input("Username >> ")
         password = input("Password >> ")
-        user_id = DBX.get_user_id_from_db(username, password)
+        user_id = User.get_user_id_from_db(username, password)
         if user_id:
             return User(user_id, username, password)
         else:

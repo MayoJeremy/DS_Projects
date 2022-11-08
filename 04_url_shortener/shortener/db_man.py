@@ -1,6 +1,7 @@
 import mysql.connector
 from random import randint
-#from shortener.url import Url
+
+# from shortener.url import Url
 import config as cfg
 
 
@@ -24,7 +25,12 @@ class Dbman:
 
     def get_one_entry(self, sql: str, data: tuple = None) -> tuple:
         self.cursor.execute(sql, data)
-        return self.cursor.fetchone()[0]
+        try:
+            entry = self.cursor.fetchone()[0]
+        except TypeError:
+            return 0
+        else:
+            return entry
 
     def get_user_id_from_db(self, user_name: str, user_password: str) -> int:
         """Query DB for existing User via Username and Password
@@ -44,16 +50,6 @@ class Dbman:
             return 0
         else:
             return user_id
-
-    def get_user_saved_urls(self, user_id: int) -> list[tuple[str, str]]:
-        sql = """
-        SELECT OriginalUrL, ShortUrL
-        FROM url
-        WHERE UserID = %s
-        """
-
-        self.cursor.execute(sql, (user_id,))
-        return self.cursor.fetchall()
 
     def save_url_to_db_and_get_url_id(self, user_urL):
         sql = """
@@ -87,5 +83,3 @@ class Dbman:
                 self.cursor.fetchone()[0]
             except TypeError:
                 return new_short_url
-
-
