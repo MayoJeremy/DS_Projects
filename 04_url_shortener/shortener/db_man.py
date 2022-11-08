@@ -1,16 +1,17 @@
 import mysql.connector
 from random import randint
 from shortener.url import Url
+import config as cfg
 
 
 class Dbman:
     def __init__(self) -> None:
         self.db = mysql.connector.connect(
-            host="127.0.0.1",
-            user="root",
-            password="12345",
-            port="3306",
-            database="urlshortener",
+            host=cfg.DB_HOST,
+            user=cfg.DB_USER,
+            password=cfg.DB_PASSWORD,
+            port=cfg.DB_PORT,
+            database=cfg.DB_NAME,
         )
         self.cursor = self.db.cursor()
 

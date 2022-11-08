@@ -1,0 +1,8 @@
+{
+    "app_title": "Url_Shortener",
+    "db_host": "127.0.0.1",
+    "db_user": "root",
+    "db_password": "12345",
+    "db_port": "3306",
+    "db_database": "urlshortener"
+}
