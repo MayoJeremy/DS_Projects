@@ -69,11 +69,6 @@ def new_url(user: User):
     new_url.url_id = url_id
 
 
-def print_original_url():
-    lookup_url = input("Shorturl >> ")
-    print(DBX.short_url_lookup(lookup_url))
-
-
 def main():
     user = user_login()
     mode = get_mode()
@@ -83,9 +78,9 @@ def main():
     elif mode == 2:
         for saved_url in user.get_all_saved_urls():
             print("{} | {} | {}".format(*saved_url))
-
     elif mode == 3:
-        print_original_url()  # 67439
+        short_url = input("Shorturl >> ")
+        print(Url.get_original_url_from_short_url((short_url,)))
 
 
 if __name__ == "__main__":

@@ -1,6 +1,6 @@
 import mysql.connector
 from random import randint
-from shortener.url import Url
+#from shortener.url import Url
 import config as cfg
 
 
@@ -21,6 +21,10 @@ class Dbman:
     def get_all_entries(self, sql: str, data: tuple = None) -> list:
         self.cursor.execute(sql, data)
         return self.cursor.fetchall()
+
+    def get_one_entry(self, sql: str, data: tuple = None) -> tuple:
+        self.cursor.execute(sql, data)
+        return self.cursor.fetchone()[0]
 
     def get_user_id_from_db(self, user_name: str, user_password: str) -> int:
         """Query DB for existing User via Username and Password
@@ -51,7 +55,7 @@ class Dbman:
         self.cursor.execute(sql, (user_id,))
         return self.cursor.fetchall()
 
-    def save_url_to_db_and_get_url_id(self, user_urL: Url):
+    def save_url_to_db_and_get_url_id(self, user_urL):
         sql = """
         INSERT INTO url (DomainName, OriginalUrL, ShortUrL, UserID)
         VALUES (%s,%s,%s,%s)
@@ -85,12 +89,3 @@ class Dbman:
                 return new_short_url
 
 
-
-    def short_url_lookup(self, short_url: str):
-        sql = """
-            SELECT OriginalUrl
-            FROM url
-            WHERE ShortUrL = %s
-        """
-        self.cursor.execute(sql, (short_url,))
-        return self.cursor.fetchone()[0]

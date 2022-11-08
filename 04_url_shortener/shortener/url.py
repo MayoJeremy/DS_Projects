@@ -1,3 +1,6 @@
+from shortener.db_man import Dbman
+
+
 class Url:
     base_url = "https://wbs.com"
 
@@ -8,8 +11,20 @@ class Url:
         self.short_url = Url.base_url + "/" + short_url
         self.user = user
 
+        self.db = Dbman()
+
     def __repr__(self) -> str:
         return f"{self.short_url}"
+
+    @staticmethod
+    def get_original_url_from_short_url(short_url: str):
+        sql = """
+            SELECT OriginalUrl
+            FROM url
+            WHERE ShortUrL = %s
+        """
+
+        return Dbman().get_one_entry(sql, short_url)
 
     @classmethod
     def create_new_url_via_input(cls, short_url, user):
