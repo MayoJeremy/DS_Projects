@@ -17,18 +17,20 @@ def get_mode() -> int:
     """
     print("Mainmenu")
     while True:
-        mode = int(
-            input(
-                """
-(1) Create new URL
+        mode = input(
+            """(1) Create new URL
 (2) List all URLs
 (3) Find URL from shortened URL
 >> """
-            )
         )
-        if mode in [1, 2, 3]:
-            return mode
-        print("Invalid Mode selected. Try again\n")
+        try:
+            mode = int(mode)
+        except ValueError:
+            print("Please put in an Integer\n")
+        else:
+            if mode in [1, 2, 3]:
+                return mode
+            print("Invalid Mode selected. Try again\n")
 
 
 def url_creation_mode(user: User, urls: list) -> None:
