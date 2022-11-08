@@ -2,32 +2,8 @@
 Application to shorten an URL and
 save URL to shorten and generated URL to Database
 """
-from shortener.db_man import Dbman
 from shortener.user import User
 from shortener.url import Url
-
-DBX = Dbman()
-
-
-def user_login() -> User:
-
-    """
-    Prompts user to input username and passwort. Loops
-    until Login successful and Userobject created.
-
-    Returns:
-        User: Logged in Userobject
-    """
-
-    print("Loginmask!\n")
-    while True:
-        username = input("Username >> ")
-        password = input("Password >> ")
-        user_id = User.get_user_id_from_db(username, password)
-        if user_id:
-            return User(user_id, username, password)
-        else:
-            print("Wrong credentials. Try again\n")
 
 
 def get_mode() -> int:
@@ -56,7 +32,7 @@ def get_mode() -> int:
 
 
 def main():
-    user = user_login()
+    user = User.user_login()
     mode = get_mode()
     urls = Url.get_list_of_urls()
     print()
