@@ -13,7 +13,16 @@ class User:
         return f"{self.user_id}, {self.user_name}"
 
     @staticmethod
-    def get_user_id_from_db(user_name: str, user_password: str):
+    def get_user_id_from_db(user_name: str, user_password: str) -> int:
+        """Retrieves UserID of User, specified via Username and Password
+
+        Args:
+            user_name (str): Users Username
+            user_password (str): Users Password
+
+        Returns:
+            int: UserID
+        """
         db = Dbman()
         sql = "SELECT UserID FROM user WHERE Username = %s AND Password = %s"
         return db.get_one_entry(sql, (user_name, user_password))
@@ -39,6 +48,7 @@ class User:
                 print("Wrong credentials. Try again\n")
 
     def get_all_saved_urls(self):
+        """Retrieves every URL registered"""
         sql = """
             SELECT DomainName, ShortUrl, Username
             FROM url

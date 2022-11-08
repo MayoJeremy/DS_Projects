@@ -28,13 +28,25 @@ class Url:
 
     @staticmethod
     def get_list_of_urls_from_db() -> list:
+        """Retrive URLs Data from DB.
 
+        Returns:
+            list: URL Data in Tuple.
+        """
         sql = "SELECT * FROM url"
         sql_urls = Dbman().get_all_entries(sql)
         return sql_urls
 
     @staticmethod
     def make_list_of_urls(urls_list_from_db: list) -> list:
+        """Generating URL Objects and creating List of them.
+
+        Args:
+            urls_list_from_db (list): URL List from DB
+
+        Returns:
+            list: List of URL Objects.
+        """
         urls = []
         for db_url in urls_list_from_db:
             urls.append(
@@ -47,9 +59,21 @@ class Url:
                 )
             )
         return urls
-    @classmethod
-    def create_new_url_via_input(cls, original_url, page_code, user_id):
 
+    @classmethod
+    def create_new_url_via_original_url_and_page_code(
+        cls, original_url, page_code, user_id
+    ):
+        """Alternative initializer method if strings are not yet formatted.
+
+        Args:
+            original_url (_type_): URL from Userinput.
+            page_code (_type_): Generated unique code for webpage
+            user_id (_type_): UserID of logged in User
+
+        Returns:
+            _type_: URL Object
+        """
         domain_name = Url.make_domain_name(original_url)
         short_url = cls.base_url + "/" + page_code
 
@@ -95,7 +119,17 @@ class Url:
         self.url_id = self.db.cursor.lastrowid
 
     @staticmethod
-    def generate_page_code(urls_list: list):
+    def generate_page_code(urls_list: list) -> str:
+        """Generates randomized 5 Letter string
+        and checks if it is unique. Concatenates it with
+        classes base_url
+
+        Args:
+            urls_list (list): list to search uniqueness in
+
+        Returns:
+            str: with base_url concatenated string
+        """
         while True:
             new_short_url = "".join(str(randint(0, 9)) for _ in range(5))
             unique = True

@@ -42,7 +42,7 @@ def url_creation_mode(user: User, urls: list) -> None:
     """
     original_url = input("Url to shorten >> ")
     page_code = Url.generate_page_code(urls)
-    new_url = Url.create_new_url_via_input(
+    new_url = Url.create_new_url_via_original_url_and_page_code(
         original_url,
         page_code,
         user.user_id,
