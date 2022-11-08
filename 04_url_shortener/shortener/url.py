@@ -36,13 +36,31 @@ class Url:
         return urls
 
     @classmethod
-    def create_new_url_via_input(cls, page_code, user):
-        original_url = input("Url to shorten >> ")
-        domain_name = original_url.split("//")[1].split("/")[0].split(".")[-2]
-        if domain_name.startswith("www."):
-            domain_name = domain_name[4:]
+    def create_new_url_via_input(cls, original_url, page_code, user_id):
+
+        domain_name = Url.make_domain_name(original_url)
         short_url = cls.base_url + "/" + page_code
-        return Url(domain_name, original_url, short_url, user)
+
+        return Url(domain_name, original_url, short_url, user_id)
+
+    @staticmethod
+    def make_domain_name(base_url: str) -> str:
+        """Generates Domainname out of URL.
+
+        Args:
+            base_url (str): URL to extract Domain from.
+
+        Returns:
+            str: Domain
+        """
+        # Cut the Protocol prefix
+        domain_name = base_url.split("//")[1]
+        # Cut the name of Webpage
+        domain_name = domain_name.split("/")[0]
+        # Cut Domainpre-/suffix
+        domain_name = domain_name.split(".")[-2]
+
+        return domain_name
 
     def save_to_db(self):
         """

@@ -31,6 +31,13 @@ def get_mode() -> int:
         print("Invalid Mode selected. Try again\n")
 
 
+def url_creation_mode(user: User, urls: list) -> None:
+    original_url = input("Url to shorten >> ")
+    page_code = Url.generate_page_code(urls)
+    new_url = Url.create_new_url_via_input(original_url, page_code, user.user_id)
+    new_url.save_to_db()
+
+
 def main():
     user = User.user_login()
     mode = get_mode()
@@ -38,9 +45,7 @@ def main():
     print()
 
     if mode == 1:
-        page_code = Url.generate_page_code(urls)
-        new_url = Url.create_new_url_via_input(page_code, user.user_id)
-        new_url.save_to_db()
+        url_creation_mode(user, urls)
     elif mode == 2:
         for url in urls:
             if url.user_id == user.user_id:
