@@ -27,23 +27,26 @@ class Url:
         return f"{self.short_url}"
 
     @staticmethod
-    def get_list_of_urls() -> list:
+    def get_list_of_urls_from_db() -> list:
 
         sql = "SELECT * FROM url"
         sql_urls = Dbman().get_all_entries(sql)
+        return sql_urls
+
+    @staticmethod
+    def make_list_of_urls(urls_list_from_db: list) -> list:
         urls = []
-        for sql_url in sql_urls:
+        for db_url in urls_list_from_db:
             urls.append(
                 Url(
-                    sql_url[1],
-                    sql_url[2],
-                    sql_url[3],
-                    sql_url[4],
-                    sql_url[0],
+                    db_url[1],
+                    db_url[2],
+                    db_url[3],
+                    db_url[4],
+                    db_url[0],
                 )
             )
         return urls
-
     @classmethod
     def create_new_url_via_input(cls, original_url, page_code, user_id):
 

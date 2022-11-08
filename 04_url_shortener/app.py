@@ -80,8 +80,8 @@ def url_lookup_mode(urls: list) -> None:
 def main():
     user = User.user_login()
     mode = get_mode()
-    db_urls_list = Url.get_list_of_urls()
-    urls_list = Url.get_list_of_urls()
+    db_urls_list = Url.get_list_of_urls_from_db()
+    urls_list = Url.make_list_of_urls(db_urls_list)
     print()
 
     if mode == 1:
