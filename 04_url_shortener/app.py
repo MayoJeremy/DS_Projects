@@ -55,32 +55,26 @@ def get_mode() -> int:
         print("Invalid Mode selected. Try again\n")
 
 
-def new_url(user: User):
-    """Generates new Url Object
-
-    Args:
-        user (User): Logged in User
-    """
-    print("New URL")
-    short_url = DBX.get_new_random_short_url()
-    new_url = Url.create_new_url_via_input(short_url, user)
-    print(new_url)
-    url_id = DBX.save_url_to_db_and_get_url_id(new_url)
-    new_url.url_id = url_id
-
-
 def main():
     user = user_login()
     mode = get_mode()
+    urls = Url.get_list_of_urls()
     print()
+
     if mode == 1:
-        new_url(user)
+        page_code = Url.generate_page_code(urls)
+        new_url = Url.create_new_url_via_input(page_code, user.user_id)
+        new_url.save_to_db()
     elif mode == 2:
-        for saved_url in user.get_all_saved_urls():
-            print("{} | {} | {}".format(*saved_url))
+        for url in urls:
+            if url.user_id == user.user_id:
+                print(f"{url.domain_name} | {url.short_url} | {user.user_name}")
+
     elif mode == 3:
         short_url = input("Shorturl >> ")
-        print(Url.get_original_url_from_short_url((short_url,)))
+        for url in urls:
+            if short_url == url.short_url:
+                print(url.original_url)
 
 
 if __name__ == "__main__":
