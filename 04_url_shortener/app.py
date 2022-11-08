@@ -14,12 +14,13 @@ def get_mode() -> int:
         int: Selected Mode
 
     """
-    print("Mainmenu")
+    print("\nMainmenu")
     while True:
         mode = input(
             """(1) Create new URL
 (2) List all URLs
 (3) Find URL from shortened URL
+(0) Exit
 >> """
         )
         try:
@@ -27,7 +28,7 @@ def get_mode() -> int:
         except ValueError:
             print("Please put in an Integer\n")
         else:
-            if mode in [1, 2, 3]:
+            if mode in [0, 1, 2, 3]:
                 return mode
             print("Invalid Mode selected. Try again\n")
 
@@ -75,22 +76,26 @@ def url_lookup_mode(urls: list) -> None:
     short_url = input("Shorturl >> ")
     for url in urls:
         if short_url == url.short_url:
-            print(url.original_url)
+            print(f"Original URL = {url.original_url}")
+            return
+    print("No Entry found")
 
 
 def main():
     user = User.user_login()
     mode = get_mode()
-    db_urls_list = Url.get_list_of_urls_from_db()
-    urls_list = Url.make_list_of_urls(db_urls_list)
-    print()
+    while mode:
+        db_urls_list = Url.get_list_of_urls_from_db()
+        urls_list = Url.make_list_of_urls(db_urls_list)
+        print()
 
-    if mode == 1:
-        url_creation_mode(user, urls_list)
-    elif mode == 2:
-        url_display_mode(user, urls_list)
-    elif mode == 3:
-        url_lookup_mode(urls_list)
+        if mode == 1:
+            url_creation_mode(user, urls_list)
+        elif mode == 2:
+            url_display_mode(user, urls_list)
+        elif mode == 3:
+            url_lookup_mode(urls_list)
+        mode = get_mode()
 
 
 if __name__ == "__main__":
