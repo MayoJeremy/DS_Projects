@@ -44,6 +44,13 @@ def url_display_mode(user: User, urls: list) -> None:
             print(f"{url.domain_name} | {url.short_url} | {user.user_name}")
 
 
+def url_lookup_mode(urls: list) -> None:
+    short_url = input("Shorturl >> ")
+    for url in urls:
+        if short_url == url.short_url:
+            print(url.original_url)
+
+
 def main():
     user = User.user_login()
     mode = get_mode()
@@ -55,10 +62,7 @@ def main():
     elif mode == 2:
         url_display_mode(user, urls)
     elif mode == 3:
-        short_url = input("Shorturl >> ")
-        for url in urls:
-            if short_url == url.short_url:
-                print(url.original_url)
+        url_lookup_mode(urls)
 
 
 if __name__ == "__main__":
