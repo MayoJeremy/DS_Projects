@@ -1,6 +1,5 @@
 """
-Application to shorten an URL and
-save URL to shorten and generated URL to Database
+Application to shorten an URL
 """
 from shortener.user import User
 from shortener.url import Url
