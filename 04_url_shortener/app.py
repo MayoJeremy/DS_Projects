@@ -63,16 +63,10 @@ def new_url(user: User):
     """
     print("New URL")
     short_url = DBX.get_new_random_short_url()
-    new_url = Url.create_new_url_via_input(short_url, user.user_id)
+    new_url = Url.create_new_url_via_input(short_url, user)
     print(new_url)
     url_id = DBX.save_url_to_db_and_get_url_id(new_url)
     new_url.url_id = url_id
-
-
-def list_all_urls(user: User):
-    db_urls = DBX.get_all_urls_formatted(user.user_id)
-    for db_url in db_urls:
-        print("{} | {} | {}".format(*db_url))
 
 
 def print_original_url():
@@ -87,7 +81,8 @@ def main():
     if mode == 1:
         new_url(user)
     elif mode == 2:
-        list_all_urls(user)
+        for saved_url in user.get_all_saved_urls():
+            print("{} | {} | {}".format(*saved_url))
 
     elif mode == 3:
         print_original_url()  # 67439

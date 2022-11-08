@@ -18,6 +18,10 @@ class Dbman:
     def __del__(self):
         self.db.close()
 
+    def get_all_entries(self, sql: str, data: tuple = None) -> list:
+        self.cursor.execute(sql, data)
+        return self.cursor.fetchall()
+
     def get_user_id_from_db(self, user_name: str, user_password: str) -> int:
         """Query DB for existing User via Username and Password
 
@@ -59,7 +63,7 @@ class Dbman:
                 user_urL.domain_name,
                 user_urL.original_url,
                 user_urL.short_url,
-                user_urL.user_id,
+                user_urL.user,
             ],
         )
         self.db.commit()
@@ -80,25 +84,7 @@ class Dbman:
             except TypeError:
                 return new_short_url
 
-    def get_all_urls_formatted(self, user_id: int) -> list[str]:
-        """Retrieves every Url a User has registered
 
-        Args:
-            user_id(int): UserID to identify
-
-        Returns:
-            list[str]: List of (Domain, Shortened Url, Username)
-        """
-
-        sql = """
-            SELECT DomainName, ShortUrl, Username
-            FROM url
-            INNER JOIN user
-            USING (UserID)
-            WHERE UserID = %s
-        """
-        self.cursor.execute(sql, (user_id,))
-        return self.cursor.fetchall()
 
     def short_url_lookup(self, short_url: str):
         sql = """
