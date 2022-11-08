@@ -1,9 +1,10 @@
 from shortener.db_man import Dbman
 from random import randint
+import config as cfg
 
 
 class Url:
-    base_url = "https://wbs.com"
+    base_url = cfg.BASE_URL
 
     def __init__(self, domain_name, original_url, short_url, user_id, url_id=0) -> None:
         self.url_id = url_id
