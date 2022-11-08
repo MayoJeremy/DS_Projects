@@ -6,7 +6,15 @@ import config as cfg
 class Url:
     base_url = cfg.BASE_URL
 
-    def __init__(self, domain_name, original_url, short_url, user_id, url_id=0) -> None:
+    def __init__(
+        self,
+        domain_name,
+        original_url,
+        short_url,
+        user_id,
+        url_id=0,
+    ) -> None:
+
         self.url_id = url_id
         self.domain_name = domain_name
         self.original_url = original_url
@@ -19,7 +27,8 @@ class Url:
         return f"{self.short_url}"
 
     @staticmethod
-    def get_list_of_urls():
+    def get_list_of_urls() -> list:
+
         sql = "SELECT * FROM url"
         sql_urls = Dbman().get_all_entries(sql)
         urls = []
