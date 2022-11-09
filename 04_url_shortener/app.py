@@ -63,7 +63,7 @@ def url_display_mode(user: User, urls: list) -> None:
     """
     for url in urls:
         if url.user_id == user.user_id:
-            print(f"{url.domain_name} | {url.short_url} | {user.user_name}")
+            print(f"{url.domain_name} | {url} | {user}")
 
 
 def url_lookup_mode(urls: list) -> None:
@@ -83,7 +83,7 @@ def url_lookup_mode(urls: list) -> None:
         if user_in == url.short_url:
             print(f"Original URL = {url.original_url}")
             return
-        
+
     print(f"No Entry for Shorturl {user_in} found")
 
 

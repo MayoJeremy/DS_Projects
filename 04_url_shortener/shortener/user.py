@@ -10,7 +10,7 @@ class User:
         self.db = Dbman()
 
     def __repr__(self) -> str:
-        return f"{self.user_id}, {self.user_name}"
+        return f"{self.user_id} {self.user_name}"
 
     @staticmethod
     def get_user_id_from_db(user_name: str, user_password: str) -> int:
