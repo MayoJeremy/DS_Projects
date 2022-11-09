@@ -4,7 +4,6 @@ import config as cfg
 
 
 class Url:
-    base_url = cfg.BASE_URL
 
     def __init__(
         self,
@@ -93,17 +92,17 @@ class Url:
         return cfg.BASE_URL + "/" + page_code
 
     @staticmethod
-    def make_domain_name(base_url: str) -> str:
+    def make_domain_name(in_url: str) -> str:
         """Generates Domainname out of URL.
 
         Args:
-            base_url (str): URL to extract Domain from.
+            in_url (str): URL to extract Domain from.
 
         Returns:
             str: Domain
         """
         # Cut the Protocol prefix
-        domain_name = base_url.split("//")[1]
+        domain_name = in_url.split("//")[1]
         # Cut the name of Webpage
         domain_name = domain_name.split("/")[0]
         # Cut Domainpre-/suffix
@@ -134,8 +133,7 @@ class Url:
     @staticmethod
     def generate_page_code(urls_list: list) -> str:
         """Generates randomized 5 Letter string
-        and checks if it is unique. Concatenates it with
-        classes base_url
+        and checks if db has short url with page_code
 
         Args:
             urls_list (list): list to search uniqueness in
@@ -144,12 +142,12 @@ class Url:
             str: with base_url concatenated string
         """
         while True:
-            new_short_url = "".join(
+            page_code = "".join(
                 str(randint(0, 9)) for _ in range(cfg.PAGE_CODE_LEN)
             )
             unique = True
             for url in urls_list:
-                if Url.base_url + "/" + new_short_url == url.short_url:
+                if Url.generate_short_url(page_code) == url.short_url:
                     unique = False
             if unique:
-                return new_short_url
+                return page_code
