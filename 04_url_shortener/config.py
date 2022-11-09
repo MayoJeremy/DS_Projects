@@ -5,7 +5,7 @@ from pathlib import Path
 os.chdir(Path(__file__).parent)
 
 
-with open("./config.json", mode="r", encoding="UTF-8") as file:
+with open("./data/config.json", mode="r", encoding="UTF-8") as file:
     config_dict = json.load(file)
 
 
