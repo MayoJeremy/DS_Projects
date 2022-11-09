@@ -1,5 +1,4 @@
 import mysql.connector
-from random import randint
 import config as cfg
 
 
@@ -57,4 +56,3 @@ class Dbman:
         """
         self.cursor.execute(sql, data)
         self.db.commit()
-
