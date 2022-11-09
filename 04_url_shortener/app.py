@@ -29,6 +29,7 @@ def get_mode() -> int:
         except ValueError:
             print("Please put in an Integer\n")
         else:
+            # TODO modeselections from config
             if mode in [0, 1, 2, 3]:
                 return mode
             print("Invalid Mode selected. Try again\n")
