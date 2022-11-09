@@ -58,17 +58,3 @@ class Dbman:
         self.cursor.execute(sql, data)
         self.db.commit()
 
-    def get_new_random_short_url(self) -> str:
-        """Generates new url and checks if its unique in DB
-
-        Returns:
-            str: Newly generated Url
-        """
-        sql = "SELECT * FROM url WHERE ShortUrL = %s"
-        while True:
-            new_short_url = "".join(str(randint(0, 9)) for _ in range(5))
-            self.cursor.execute(sql, (new_short_url,))
-            try:
-                self.cursor.fetchone()[0]
-            except TypeError:
-                return new_short_url
