@@ -75,9 +75,22 @@ class Url:
             _type_: URL Object
         """
         domain_name = Url.make_domain_name(original_url)
-        short_url = cls.base_url + "/" + page_code
+        short_url = Url.generate_short_url(page_code)
 
         return Url(domain_name, original_url, short_url, user_id)
+
+    @staticmethod
+    def generate_short_url(page_code: str) -> str:
+        """Makes string out of Baseurl and pagecode
+
+        Args:
+            page_code (str): 5 Digit Code
+
+        Returns:
+            str: shortened url
+        """
+
+        return cfg.BASE_URL + "/" + page_code
 
     @staticmethod
     def make_domain_name(base_url: str) -> str:

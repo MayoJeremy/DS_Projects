@@ -3,6 +3,7 @@ Application to shorten an URL
 """
 from shortener.user import User
 from shortener.url import Url
+import config as cfg
 
 
 def get_mode() -> int:
@@ -73,9 +74,13 @@ def url_lookup_mode(urls: list) -> None:
     Args:
         urls (list): List of URLs in DB
     """
-    short_url = input("Shorturl >> ")
+    user_in = input("Shorturl >> ")
+
+    if user_in.isdigit() and len(user_in) == 5:
+        user_in = Url.generate_short_url(user_in)
+
     for url in urls:
-        if short_url == url.short_url:
+        if user_in == url.short_url:
             print(f"Original URL = {url.original_url}")
             return
     print("No Entry found")
