@@ -86,7 +86,7 @@ def main():
     mode = get_mode()
     while mode:
         db_urls_list = Url.get_list_of_urls_from_db()
-        urls_list = Url.make_list_of_urls(db_urls_list)
+        urls_list = Url.make_list_of_urls_from_db_tuple(db_urls_list)
         print()
 
         if mode == 1:

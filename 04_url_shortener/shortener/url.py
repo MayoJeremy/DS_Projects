@@ -38,7 +38,7 @@ class Url:
         return sql_urls
 
     @staticmethod
-    def make_list_of_urls(urls_list_from_db: list) -> list:
+    def make_list_of_urls_from_db_tuple(urls_list_from_db: list) -> list:
         """Generating URL Objects and creating List of them.
 
         Args:
