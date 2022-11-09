@@ -5,5 +5,6 @@
     "db_password": "12345",
     "db_port": "3306",
     "db_database": "urlshortener",
-    "base_url": "https://wbs.com"
+    "base_url": "https://wbs.com",
+    "page_code_length": 5
 }

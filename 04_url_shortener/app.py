@@ -76,14 +76,15 @@ def url_lookup_mode(urls: list) -> None:
     """
     user_in = input("Shorturl >> ")
 
-    if user_in.isdigit() and len(user_in) == 5:
+    if user_in.isdigit() and len(user_in) == cfg.PAGE_CODE_LEN:
         user_in = Url.generate_short_url(user_in)
 
     for url in urls:
         if user_in == url.short_url:
             print(f"Original URL = {url.original_url}")
             return
-    print("No Entry found")
+        
+    print(f"No Entry for Shorturl {user_in} found")
 
 
 def main():

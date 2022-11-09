@@ -144,7 +144,9 @@ class Url:
             str: with base_url concatenated string
         """
         while True:
-            new_short_url = "".join(str(randint(0, 9)) for _ in range(5))
+            new_short_url = "".join(
+                str(randint(0, 9)) for _ in range(cfg.PAGE_CODE_LEN)
+            )
             unique = True
             for url in urls_list:
                 if Url.base_url + "/" + new_short_url == url.short_url:
