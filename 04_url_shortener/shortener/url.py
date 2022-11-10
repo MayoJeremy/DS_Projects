@@ -4,7 +4,6 @@ import config as cfg
 
 
 class Url:
-
     def __init__(
         self,
         domain_name,
@@ -106,7 +105,7 @@ class Url:
         # Cut the name of Webpage
         domain_name = domain_name.split("/")[0]
         # Cut Domainpre-/suffix
-        domain_name = domain_name.split(".")[-2]
+        # domain_name = domain_name.split(".")[-2]
 
         return domain_name
 
@@ -142,9 +141,7 @@ class Url:
             str: with base_url concatenated string
         """
         while True:
-            page_code = "".join(
-                str(randint(0, 9)) for _ in range(cfg.PAGE_CODE_LEN)
-            )
+            page_code = "".join(str(randint(0, 9)) for _ in range(cfg.PAGE_CODE_LEN))
             unique = True
             for url in urls_list:
                 if Url.generate_short_url(page_code) == url.short_url:
