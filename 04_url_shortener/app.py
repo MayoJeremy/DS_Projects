@@ -16,21 +16,19 @@ def get_mode() -> int:
 
     """
     print("\nMainmenu")
+    # print the menu
+    for available_mode, i in cfg.MENU_MODE_SELECTION_OPTIONS.items():
+        print(f"({i}) {available_mode}")
+
     while True:
-        mode = input(
-            """(1) Create new URL
-(2) List all URLs
-(3) Find URL from shortened URL
-(0) Exit
->> """
-        )
+        mode = input(">> ")
+
         try:
             mode = int(mode)
         except ValueError:
             print("Please put in an Integer\n")
         else:
-            # TODO modeselections from config
-            if mode in [0, 1, 2, 3]:
+            if mode in cfg.MENU_MODE_SELECTION_OPTIONS.values():
                 return mode
             print("Invalid Mode selected. Try again\n")
 

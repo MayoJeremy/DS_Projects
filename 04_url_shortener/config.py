@@ -17,3 +17,4 @@ DB_NAME = config_dict.get("db_database")
 
 BASE_URL = config_dict.get("base_url")
 PAGE_CODE_LEN = config_dict.get("page_code_length")
+MENU_MODE_SELECTION_OPTIONS = config_dict.get("menu_mode_selection_options")

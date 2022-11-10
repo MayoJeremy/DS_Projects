@@ -6,5 +6,11 @@
     "db_port": "3306",
     "db_database": "urlshortener",
     "base_url": "https://wbs.com",
-    "page_code_length": 5
+    "page_code_length": 5,
+    "menu_mode_selection_options": {
+        "Create new URL": 1,
+        "List all URLs": 2,
+        "Find URL from shortened URL": 3,
+        "Exit": 0
+    }
 }
