@@ -1,3 +1,7 @@
 {
-    "app_title": "Serialletter Creator"
+    "app_title": "Serialletter Creator",
+    "db_host": "127.0.0.1",
+    "db_user": "root",
+    "db_password": "12345",
+    "db_database": "serialletter"
 }
