@@ -1,4 +1,4 @@
-import management.config as cfg
+import config as cfg
 
 
 class Letter():

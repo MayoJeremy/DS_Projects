@@ -1,11 +1,11 @@
 """
 Application to Create Serialletters
 """
-import management.config as cfg
+import config as cfg
 
 
 def main():
-    pass
+    print(cfg.DB_HOST)
 
 
 if __name__ == "__main__":
