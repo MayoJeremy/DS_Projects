@@ -1,8 +1,5 @@
 import management.config as cfg
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy import Column, String, DateTime, Integer, create_engine
-from datetime import datetime
-
 
 class Dbman:
-    pass
+    def __init__(self) -> None:
+        pass

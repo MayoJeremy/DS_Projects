@@ -1,6 +1,7 @@
 """
 Application to Create Serialletters
 """
+import management.config as cfg
 
 
 def main():

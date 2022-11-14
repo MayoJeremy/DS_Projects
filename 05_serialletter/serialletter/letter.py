@@ -1,5 +1,5 @@
 import management.config as cfg
 
 
-class Letter(cfg.DB_BASE):
+class Letter():
     pass
