@@ -59,16 +59,27 @@ def get_dishes_via_category(category):
     return collection.find({"category": category})
 
 
+def get_dish_via_id(id):
+    return collection.find_one({"_id": id})
+
+
 def get_user_wishes():
-    user_in = int(input("0 to quit >> "))
+    user_in = 1
+    order_list = []
+    print("Your Order please.")
     while user_in:
-        return 0
+        user_in = int(input("0 to quit >> "))
+        dish = get_dish_via_id(user_in)
+        if dish:
+            order_list.append(dish)
+    return order_list
 
 
 def main():
     # import_old_json_menu()
     menu_list = list(collection.find({}))
     display_menu(menu_list)
+    user_wishes = get_user_wishes()
 
 
 if __name__ == "__main__":
