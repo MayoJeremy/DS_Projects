@@ -98,6 +98,8 @@ def print_receipt(order_id):
     print("_" * 30)
     for item in items:
         print(f"{item['_id']} {item['title']} {item['price']}€")
+    print("_" * 30)
+    print(f"Total: {order['total']} € ")
 
 
 def get_customer_info():
@@ -109,7 +111,12 @@ def get_customer_info():
 
 def save_order(customer, order_list):
     order_id = insert_one_record_without_id(
-        order_collection, {"customer": customer, "order": order_list}
+        order_collection,
+        {
+            "customer": customer,
+            "order": order_list,
+            "total": sum(order["price"] for order in order_list),
+        },
     )
     return order_id
 
