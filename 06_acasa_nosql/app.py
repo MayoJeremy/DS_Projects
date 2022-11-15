@@ -8,6 +8,7 @@ os.chdir(Path(__file__).parent)
 DB_NAME = "acasa"
 COLLECTION_NAME_DISH = "dish"
 COLLECTION_NAME_CUSTOMER = "customer"
+COLLECTION_NAME_ORDER = "order"
 
 server = "mongodb://localhost:27017"
 client = MongoClient(server)
@@ -15,6 +16,7 @@ client = MongoClient(server)
 db = client[DB_NAME]
 dish_collection = db[COLLECTION_NAME_DISH]
 customer_collection = db[COLLECTION_NAME_CUSTOMER]
+order_collection = db[COLLECTION_NAME_ORDER]
 
 
 def import_old_json_menu():
@@ -81,9 +83,16 @@ def get_user_wishes():
     return order_list
 
 
-def print_receipt(order_list):
-    for order in order_list:
-        print(f"{order['_id']} {order['title']} {order['price']} €")
+def print_receipt(order_id):
+    order = get_one_entry_via_id(order_collection, order_id)
+    customer = order["customer"]
+    items = order["order"]
+    print("Invoice")
+    print("*" * 15 + "\n")
+    print(f"Customer:\n{customer['first_name']} {customer['last_name']}")
+    print("_" * 30)
+    for item in items:
+        print(f"{item['_id']} {item['title']} {item['price']}€")
 
 
 def get_customer_info():
@@ -91,6 +100,13 @@ def get_customer_info():
     customer_data["first_name"] = input("First Name: ")
     customer_data["last_name"] = input("Last Name: ")
     return customer_data
+
+
+def save_order(customer, order_list):
+    order_id = insert_one_record_without_id(
+        order_collection, {"customer": customer, "order": order_list}
+    )
+    return order_id
 
 
 def main():
@@ -108,7 +124,9 @@ def main():
     display_menu(menu_list)
 
     user_wishes = get_user_wishes()
-    print_receipt(user_wishes)
+    order_id = save_order(customer, user_wishes)
+    print()
+    print_receipt(order_id)
 
 
 if __name__ == "__main__":
