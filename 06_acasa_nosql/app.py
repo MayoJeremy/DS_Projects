@@ -2,6 +2,7 @@ from pymongo import MongoClient
 import json
 import os
 from pathlib import Path
+from collections import OrderedDict
 
 os.chdir(Path(__file__).parent)
 
@@ -46,7 +47,11 @@ def insert_one_record_without_id(collection, data):
 
 
 def display_menu(menu_list):
-    categories = set([menu_item["category"] for menu_item in menu_list])
+    # Create ordered list of categories without duplicates
+    categories = list(
+        OrderedDict.fromkeys([menu_item["category"] for menu_item in menu_list])
+    )
+    print(categories)
     for category in categories:
         print(category + "\n")
         dishes_from_cat = [
