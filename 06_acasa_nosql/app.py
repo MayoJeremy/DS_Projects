@@ -129,9 +129,10 @@ def main():
     display_menu(menu_list)
 
     user_wishes = get_user_wishes()
-    order_id = save_order(customer, user_wishes)
-    print()
-    print_receipt(order_id)
+    if user_wishes:
+        order_id = save_order(customer, user_wishes)
+        print()
+        print_receipt(order_id)
 
 
 if __name__ == "__main__":
