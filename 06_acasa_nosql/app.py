@@ -6,13 +6,15 @@ from pathlib import Path
 os.chdir(Path(__file__).parent)
 
 DB_NAME = "acasa"
-COLLECTION_NAME = "dish"
+COLLECTION_NAME_DISH = "dish"
+COLLECTION_NAME_CUSTOMER = "customer"
 
 server = "mongodb://localhost:27017"
 client = MongoClient(server)
 
 db = client[DB_NAME]
-collection = db[COLLECTION_NAME]
+dish_collection = db[COLLECTION_NAME_DISH]
+customer_collection = db[COLLECTION_NAME_CUSTOMER]
 
 
 def import_old_json_menu():
@@ -30,14 +32,14 @@ def import_old_json_menu():
                     "category": category,
                 }
             )
-    insert_multiple_records_with_id(data)
+    insert_multiple_records_with_id(dish_collection, data)
 
 
-def insert_multiple_records_with_id(data):
+def insert_multiple_records_with_id(collection, data):
     collection.insert_many(data)
 
 
-def insert_one_record_without_id(data):
+def insert_one_record_without_id(collection, data):
     collection.insert_one(data)
 
 
@@ -54,13 +56,17 @@ def display_menu(menu_list):
         print()
 
 
-def get_dishes_via_category(category):
+def get_multiple_entries_via_category(collection, category):
 
-    return collection.find({"category": category})
+    return dish_collection.find({"category": category})
 
 
-def get_dish_via_id(id):
+def get_one_entry_via_id(collection, id):
     return collection.find_one({"_id": id})
+
+
+def check_customer_registration(customer_data):
+    return customer_collection.find_one(customer_data)
 
 
 def get_user_wishes():
@@ -69,17 +75,37 @@ def get_user_wishes():
     print("Your Order please.")
     while user_in:
         user_in = int(input("0 to quit >> "))
-        dish = get_dish_via_id(user_in)
+        dish = get_one_entry_via_id(dish_collection, user_in)
         if dish:
             order_list.append(dish)
     return order_list
 
 
+def print_receipt(order_list):
+    for order in order_list:
+        print(f"{order['_id']} {order['title']} {order['price']} €")
+
+
+def get_customer_info():
+    customer_data = {}
+    customer_data["first_name"] = input("First Name: ")
+    customer_data["last_name"] = input("Last Name: ")
+    return customer_data
+
+
 def main():
     # import_old_json_menu()
-    menu_list = list(collection.find({}))
+    menu_list = list(dish_collection.find({}))
+
+    # Get Customer info and save to DB if new customer
+    customer = get_customer_info()
+    if not check_customer_registration(customer):
+        insert_one_record_without_id(customer_collection, customer)
+
     display_menu(menu_list)
+
     user_wishes = get_user_wishes()
+    print_receipt(user_wishes)
 
 
 if __name__ == "__main__":
