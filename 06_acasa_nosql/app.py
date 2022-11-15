@@ -40,7 +40,7 @@ def insert_multiple_records_with_id(collection, data):
 
 
 def insert_one_record_without_id(collection, data):
-    collection.insert_one(data)
+    return collection.insert_one(data).inserted_id
 
 
 def display_menu(menu_list):
@@ -99,8 +99,11 @@ def main():
 
     # Get Customer info and save to DB if new customer
     customer = get_customer_info()
-    if not check_customer_registration(customer):
-        insert_one_record_without_id(customer_collection, customer)
+    db_customer = check_customer_registration(customer)
+    if not db_customer:
+        customer["_id"] = insert_one_record_without_id(customer_collection, customer)
+    else:
+        customer = db_customer
 
     display_menu(menu_list)
 
