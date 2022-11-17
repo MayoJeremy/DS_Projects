@@ -63,9 +63,10 @@ class Calculator:
         self.input_string.set(self.input_string.get() + symbol_to_add)
 
     def calculate_and_display_result(self, event=None):
-        result = eval(self.input_string.get())  # careful, can insert pythoncode
+        result = ""
+        if self.input_string.get():
+            result = eval(self.input_string.get())  # careful, can insert pythoncode
         self.result_string.set(result)
-
 
     def clear_input_label(self, event=None):
         self.input_string.set("")
