@@ -1,9 +1,7 @@
-import os
 import tkinter as tk
-from pathlib import Path
+import config as cfg
 from calculator.calculator import Calculator
 
-os.chdir(Path(__file__).parent)
 
 WINDOW = tk.Tk()
 
