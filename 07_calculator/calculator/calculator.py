@@ -15,6 +15,28 @@ class Calculator:
         self.input_label()
         self.create_numpad()
         self.create_operand_selection()
+        self.bind_numbers_to_window()
+        self.bind_operations_to_window()
+
+    def bind_numbers_to_window(self):
+        self.window.bind("1", lambda ev: self.add_sym_to_input("1"))
+        self.window.bind("2", lambda ev: self.add_sym_to_input("2"))
+        self.window.bind("3", lambda ev: self.add_sym_to_input("3"))
+        self.window.bind("4", lambda ev: self.add_sym_to_input("4"))
+        self.window.bind("5", lambda ev: self.add_sym_to_input("5"))
+        self.window.bind("6", lambda ev: self.add_sym_to_input("6"))
+        self.window.bind("7", lambda ev: self.add_sym_to_input("7"))
+        self.window.bind("8", lambda ev: self.add_sym_to_input("8"))
+        self.window.bind("9", lambda ev: self.add_sym_to_input("9"))
+        self.window.bind("0", lambda ev: self.add_sym_to_input("0"))
+
+    def bind_operations_to_window(self):
+        self.window.bind("+", lambda ev: self.add_sym_to_input("+"))
+        self.window.bind("-", lambda ev: self.add_sym_to_input("-"))
+        self.window.bind("*", lambda ev: self.add_sym_to_input("*"))
+        self.window.bind("/", lambda ev: self.add_sym_to_input("/"))
+        self.window.bind("<BackSpace>", self.clear_input_label)
+        self.window.bind("<Return>", self.calculate_and_display_result)
 
     def result_label(self):
         self.label_result = tk.Label(self.window, text="Result label")
@@ -27,11 +49,11 @@ class Calculator:
     def add_sym_to_input(self, symbol_to_add):
         self.input_string.set(self.input_string.get() + symbol_to_add)
 
-    def calculate_and_display_result(self):
+    def calculate_and_display_result(self, event=None):
         result = eval(self.input_string.get())  # careful, can insert pythoncode
         self.label_result.config(text=result)
 
-    def clear_input_label(self):
+    def clear_input_label(self, event=None):
         self.input_string.set("")
 
     def create_numpad(self):
