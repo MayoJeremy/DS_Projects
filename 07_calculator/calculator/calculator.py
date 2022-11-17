@@ -31,6 +31,9 @@ class Calculator:
         result = eval(self.input_string.get())  # careful, can insert pythoncode
         self.label_result.config(text=result)
 
+    def clear_input_label(self):
+        self.input_string.set("")
+
     def create_numpad(self):
         tk.Button(
             self.window, text="1", command=lambda: self.add_sym_to_input("1")
@@ -79,3 +82,6 @@ class Calculator:
         tk.Button(
             self.window, text="=", command=self.calculate_and_display_result
         ).grid(row=6, column=3)
+        tk.Button(self.window, text="Del", command=self.clear_input_label).grid(
+            row=6, column=2
+        )
