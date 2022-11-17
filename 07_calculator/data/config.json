@@ -1,5 +1,7 @@
 {
     "app_title": "Calculator",
     "app_width": 500,
-    "app_height": 500
+    "app_height": 500,
+    "num_width": 10,
+    "oper_width": 10
 }

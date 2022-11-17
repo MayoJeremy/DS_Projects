@@ -11,3 +11,5 @@ with open("./data/config.json", mode="r", encoding="UTF-8") as file:
 APP_TITLE = config_dict.get("app_title")
 APP_WIDTH = config_dict.get("app_width")
 APP_HEIGHT = config_dict.get("app_height")
+NUM_WIDTH = config_dict.get("num_width")
+OPER_WIDTH = config_dict.get("oper_width")

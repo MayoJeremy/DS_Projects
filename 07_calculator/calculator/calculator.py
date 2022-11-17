@@ -36,52 +36,100 @@ class Calculator:
 
     def create_numpad(self):
         tk.Button(
-            self.window, text="1", command=lambda: self.add_sym_to_input("1")
+            self.window,
+            text="1",
+            width=cfg.NUM_WIDTH,
+            command=lambda: self.add_sym_to_input("1"),
         ).grid(row=2, column=0)
         tk.Button(
-            self.window, text="2", command=lambda: self.add_sym_to_input("2")
+            self.window,
+            text="2",
+            width=cfg.NUM_WIDTH,
+            command=lambda: self.add_sym_to_input("2"),
         ).grid(row=2, column=1)
         tk.Button(
-            self.window, text="3", command=lambda: self.add_sym_to_input("3")
+            self.window,
+            text="3",
+            width=cfg.NUM_WIDTH,
+            command=lambda: self.add_sym_to_input("3"),
         ).grid(row=2, column=2)
         tk.Button(
-            self.window, text="4", command=lambda: self.add_sym_to_input("4")
+            self.window,
+            text="4",
+            width=cfg.NUM_WIDTH,
+            command=lambda: self.add_sym_to_input("4"),
         ).grid(row=3, column=0)
         tk.Button(
-            self.window, text="5", command=lambda: self.add_sym_to_input("5")
+            self.window,
+            text="5",
+            width=cfg.NUM_WIDTH,
+            command=lambda: self.add_sym_to_input("5"),
         ).grid(row=3, column=1)
         tk.Button(
-            self.window, text="6", command=lambda: self.add_sym_to_input("6")
+            self.window,
+            text="6",
+            width=cfg.NUM_WIDTH,
+            command=lambda: self.add_sym_to_input("6"),
         ).grid(row=3, column=2)
         tk.Button(
-            self.window, text="7", command=lambda: self.add_sym_to_input("7")
+            self.window,
+            text="7",
+            width=cfg.NUM_WIDTH,
+            command=lambda: self.add_sym_to_input("7"),
         ).grid(row=4, column=0)
         tk.Button(
-            self.window, text="8", command=lambda: self.add_sym_to_input("8")
+            self.window,
+            text="8",
+            width=cfg.NUM_WIDTH,
+            command=lambda: self.add_sym_to_input("8"),
         ).grid(row=4, column=1)
         tk.Button(
-            self.window, text="9", command=lambda: self.add_sym_to_input("9")
+            self.window,
+            text="9",
+            width=cfg.NUM_WIDTH,
+            command=lambda: self.add_sym_to_input("9"),
         ).grid(row=4, column=2)
         tk.Button(
-            self.window, text="0", command=lambda: self.add_sym_to_input("0")
+            self.window,
+            text="0",
+            width=cfg.NUM_WIDTH * 3,
+            command=lambda: self.add_sym_to_input("0"),
         ).grid(row=5, column=0, columnspan=3)
 
     def create_operand_selection(self):
         tk.Button(
-            self.window, text="+", command=lambda: self.add_sym_to_input("+")
+            self.window,
+            text="+",
+            width=cfg.OPER_WIDTH,
+            command=lambda: self.add_sym_to_input("+"),
         ).grid(row=2, column=3)
         tk.Button(
-            self.window, text="-", command=lambda: self.add_sym_to_input("-")
+            self.window,
+            text="-",
+            width=cfg.OPER_WIDTH,
+            command=lambda: self.add_sym_to_input("-"),
         ).grid(row=3, column=3)
         tk.Button(
-            self.window, text="*", command=lambda: self.add_sym_to_input("*")
+            self.window,
+            text="*",
+            width=cfg.OPER_WIDTH,
+            command=lambda: self.add_sym_to_input("*"),
         ).grid(row=4, column=3)
         tk.Button(
-            self.window, text="/", command=lambda: self.add_sym_to_input("/")
+            self.window,
+            text="/",
+            width=cfg.OPER_WIDTH,
+            command=lambda: self.add_sym_to_input("/"),
         ).grid(row=5, column=3)
         tk.Button(
-            self.window, text="=", command=self.calculate_and_display_result
-        ).grid(row=6, column=3)
-        tk.Button(self.window, text="Del", command=self.clear_input_label).grid(
-            row=6, column=2
-        )
+            self.window,
+            text="=",
+            width=cfg.OPER_WIDTH * 2,
+            command=self.calculate_and_display_result,
+        ).grid(row=6, column=2, columnspan=2)
+        tk.Button(
+            self.window,
+            text="Del",
+            width=cfg.OPER_WIDTH * 2,
+            command=self.clear_input_label,
+        ).grid(row=6, column=0, columnspan=2)
