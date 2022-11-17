@@ -2,6 +2,10 @@
     "app_title": "Calculator",
     "app_width": 500,
     "app_height": 500,
+    "label_height": 5,
+    "label_width": 40,
     "num_width": 10,
-    "oper_width": 10
+    "num_height": 3,
+    "oper_width": 10,
+    "oper_height": 3
 }
