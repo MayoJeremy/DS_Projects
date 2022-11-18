@@ -14,10 +14,10 @@ class Calculator:
         self.create_operand_selection()
 
     def result_label(self):
-        self.ui.add_label("result_label", 0, 0, 3)
+        self.ui.add_label("result_label", 0, 0, 4)
 
     def input_label(self):
-        self.ui.add_label("input_label", 1, 0, 3)
+        self.ui.add_label("input_label", 1, 0, 4)
 
     def create_numpad(self):
         for sym, values in cfg.NUMBERS_AVAILABLE.items():

@@ -64,8 +64,17 @@ class Cwindow:
 
     def calculate_and_display_result(self, event=None):
         result = ""
-        if self.label_text_dict["input_label"].get():
-            result = eval(
-                self.label_text_dict["input_label"].get()
-            )  # careful, can insert pythoncode
-        self.label_text_dict["result_label"].set(result)
+        input_field = self.label_text_dict["input_label"].get()
+        try:
+            if input_field[0].isdigit():
+                result = eval(input_field)  # careful, can insert pythoncode
+            elif input_field:
+                result = eval(self.label_text_dict["result_label"].get() + input_field)
+        except IndexError:
+            return
+        except SyntaxError:
+            input_field = input_field.lstrip("0")
+            self.label_text_dict["input_label"].set(input_field)
+        else:
+            self.label_text_dict["result_label"].set(result)
+            self.clear_input_label()
