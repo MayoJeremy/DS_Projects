@@ -28,7 +28,12 @@ class Cwindow:
     def bind_input_button(self, btn_name):
         self.window.bind(btn_name, lambda _: self.add_sym_to_input(btn_name))
 
-    def add_bind_eq_button(self, btn_row: int, btn_column: int, btn_span: int = 1):
+    def add_bind_eq_button(
+        self,
+        btn_row: int,
+        btn_column: int,
+        btn_span: int = 1,
+    ):
         ttk.Button(
             self.window,
             text="=",
@@ -37,7 +42,12 @@ class Cwindow:
         ).grid(row=btn_row, column=btn_column, columnspan=btn_span)
         self.window.bind("<Return>", self.calculate_and_display_result)
 
-    def add_bind_clear_button(self, btn_row: int, btn_column: int, btn_span: int = 1):
+    def add_bind_clear_button(
+        self,
+        btn_row: int,
+        btn_column: int,
+        btn_span: int = 1,
+    ):
         ttk.Button(
             self.window,
             text="Del",

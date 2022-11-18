@@ -1,5 +1,4 @@
 import tkinter as tk
-import config as cfg
 from calculator.calculator import Calculator
 from calculator.cwindow import Cwindow
 
