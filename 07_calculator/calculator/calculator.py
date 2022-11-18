@@ -3,7 +3,7 @@ from calculator.cwindow import Cwindow
 
 
 class Calculator:
-    def __init__(self, window, ui: Cwindow) -> None:
+    def __init__(self, ui: Cwindow) -> None:
         self.ui = ui
         self.setup_gui()
 

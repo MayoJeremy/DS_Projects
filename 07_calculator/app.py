@@ -9,7 +9,7 @@ WINDOW = tk.Tk()
 
 def main():
     c_ui = Cwindow(WINDOW)
-    Calculator(WINDOW, c_ui)
+    Calculator(c_ui)
     WINDOW.mainloop()
 
 
