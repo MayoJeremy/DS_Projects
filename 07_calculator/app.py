@@ -1,13 +1,15 @@
 import tkinter as tk
 import config as cfg
 from calculator.calculator import Calculator
+from calculator.cwindow import Cwindow
 
 
 WINDOW = tk.Tk()
 
 
 def main():
-    Calculator(WINDOW)
+    c_ui = Cwindow(WINDOW)
+    Calculator(WINDOW, c_ui)
     WINDOW.mainloop()
 
 
