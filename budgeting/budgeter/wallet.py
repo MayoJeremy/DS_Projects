@@ -10,7 +10,7 @@ class Wallet:
         self.name = name
 
     def __repr__(self):
-        return f"{self.name} from {self.user.name}"
+        return f"{self.name} from {self.user}"
 
     @classmethod
     def create_and_add_wallet_to_db(cls, user, name):
