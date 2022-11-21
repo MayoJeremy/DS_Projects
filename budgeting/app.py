@@ -2,6 +2,7 @@ import management.config as cfg
 from management.dbman import Dbman
 from budgeter.user import User
 from budgeter.wallet import Wallet
+from budgeter.transaction import Transaction
 
 
 def is_Registered():
@@ -24,6 +25,8 @@ def main():
     print(user_dbman)
     print(user)
     print(user.wallet_list)
+    testtrans = Transaction.create_and_add_transaction_to_db(1, 1, 100)
+    
 
 
 if __name__ == "__main__":

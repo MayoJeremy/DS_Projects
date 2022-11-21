@@ -23,3 +23,9 @@ class Wallet:
         sql_statement = "INSERT INTO wallet (user_id,name,amount) VALUES(%s,%s,%s)"
         return Wallet.dbman.insert_entry_and_retrieve_id(
             sql_statement, (user.id, name, amount))
+
+    def send_money(self):
+        pass
+
+    def receive_money(self):
+        pass
