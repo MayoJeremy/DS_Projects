@@ -10,6 +10,9 @@ class Dbman:
     def __del__(self):
         self.db.close()
 
+    def __repr__(self) -> str:
+        return f'{cfg.DB_CRED.get("user")}>{cfg.DB_CRED.get("database")}@{cfg.DB_CRED.get("host")}'
+
     def get_all_entries(self, sql: str, data: tuple = None) -> list:
         """Retrieves every entry from DB
 

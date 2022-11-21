@@ -5,6 +5,10 @@ class User:
     def __init__(self, dbman: Dbman, name: str, id: int) -> None:
         self.dbman = dbman
         self.name = name
+        self.id = id
+
+    def __repr__(self) -> str:
+        return f"{self.name}|{self.id}"
 
     @classmethod
     def register_user_from_form(cls, dbman, user_name):
