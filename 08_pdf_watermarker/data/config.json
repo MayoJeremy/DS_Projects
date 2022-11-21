@@ -1,1 +1,14 @@
-{}
+{
+    "watermark": "WBS123456",
+    "footer": {
+        "temp_file_name": "temp_footer.pdf",
+        "x_cord": 75,
+        "y_cord": 40
+    },
+    "waterstamp": {
+        "temp_file_name": "temp_water.pdf",
+        "x_cord": 275,
+        "y_cord": 240,
+        "deg_rotation": 0
+    }
+}
