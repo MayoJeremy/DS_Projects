@@ -20,9 +20,10 @@ def main():
         #user = User.register_user_from_form("Test")
     # user_wallet_1 = Wallet.create_and_add_wallet_to_db(
     #     user, "Geldbeutel", 102.4)
-    print(user_wallet_1)
+    # print(user_wallet_1)
     print(user_dbman)
     print(user)
+    print(user.wallet_list)
 
 
 if __name__ == "__main__":
