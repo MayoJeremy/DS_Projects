@@ -37,7 +37,7 @@ class Dbman:
             tuple | int: Found result or 0
         """
         self.cursor.execute(sql, data)
-        return self.cursor.fetchone()[0]
+        return self.cursor.fetchone()
 
     def save_to_db(self, sql: str, data: tuple) -> None:
         """Save/Update Entry in DB
