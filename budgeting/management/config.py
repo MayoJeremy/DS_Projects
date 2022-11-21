@@ -13,3 +13,5 @@ CONFIG_FILE_NAME = "config.json"
 
 with open(DATADIR+CONFIG_FILE_NAME, mode="r", encoding="UTF-8") as file_in:
     data_dict = json.load(file_in)
+
+DB_CRED = data_dict.get("db_cred")
