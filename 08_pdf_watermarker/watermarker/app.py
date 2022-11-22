@@ -1,6 +1,7 @@
 import config as cfg
 from PyPDF2 import PdfWriter, PdfReader
 from reportlab.pdfgen.canvas import Canvas
+from reportlab.pdfbase.ttfonts import TTFont
 
 
 def watermarker(base_pdf: str, result_pdf: str):
@@ -35,9 +36,14 @@ def create_water_stamp():
     create_watermark_template(**cfg.STAMP_TEMPLATE_FILE)
 
 
-def create_watermark_template(temp_file_name, x_cord, y_cord, deg_rotation=0):
+def create_watermark_template(temp_file_name, x_cord, y_cord, deg_rotation, font_name, font_size, font_color_rgb):
     canvas = Canvas(cfg.DATADIR + temp_file_name)
-    canvas.rotate(deg_rotation)
+
+    canvas.setFont(font_name, font_size)
+    canvas.setFillColorRGB(*font_color_rgb.values())
+    if deg_rotation:
+        canvas.rotate(deg_rotation)
+        y_cord *= -1
     canvas.drawString(x=x_cord, y=y_cord, text=cfg.WATERTEXT)
     canvas.save()
 
