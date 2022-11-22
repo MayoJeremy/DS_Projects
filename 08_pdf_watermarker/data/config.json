@@ -15,14 +15,20 @@
     },
     "waterstamp": {
         "temp_file_name": "temp_water.pdf",
-        "x_cord": 275,
-        "y_cord": 240,
-        "deg_rotation": 100,
+        "x_cord": [
+            200,
+            400
+        ],
+        "y_cord": [
+            200,
+            400
+        ],
+        "deg_rotation": 180,
         "font_name": "Courier",
         "font_size": 30,
         "font_color_rgb": {
             "red": 1,
-            "green": 1,
+            "green": 0,
             "blue": 0
         }
     }

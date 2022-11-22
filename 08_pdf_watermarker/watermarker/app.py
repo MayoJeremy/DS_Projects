@@ -1,7 +1,7 @@
 import config as cfg
 from PyPDF2 import PdfWriter, PdfReader
 from reportlab.pdfgen.canvas import Canvas
-from reportlab.pdfbase.ttfonts import TTFont
+from random import randint
 
 
 def watermarker(base_pdf: str, result_pdf: str):
@@ -33,10 +33,31 @@ def create_footer():
 
 
 def create_water_stamp():
-    create_watermark_template(**cfg.STAMP_TEMPLATE_FILE)
+    create_multipage_watermark_template(5, **cfg.STAMP_TEMPLATE_FILE)
 
 
-def create_watermark_template(temp_file_name, x_cord, y_cord, deg_rotation, font_name, font_size, font_color_rgb):
+def create_multipage_watermark_template(page_amt, temp_file_name, x_cord, y_cord,
+                                        deg_rotation, font_name, font_size,
+                                        font_color_rgb):
+    canvas = Canvas(cfg.DATADIR + temp_file_name)
+    x_cord_imp = x_cord
+    y_cord_imp = y_cord
+    for _ in range(page_amt):
+        canvas.setFont(font_name, font_size)
+        canvas.setFillColorRGB(*font_color_rgb.values())
+        x_cord = randint(*x_cord_imp)
+        y_cord = randint(*y_cord_imp)
+        if deg_rotation:
+            canvas.rotate(randint(0, deg_rotation))
+            y_cord *= -1
+
+        canvas.drawString(x=x_cord, y=y_cord, text=cfg.WATERTEXT)
+        canvas.showPage()
+    canvas.save()
+
+
+def create_watermark_template(temp_file_name, x_cord, y_cord, deg_rotation,
+                              font_name, font_size, font_color_rgb):
     canvas = Canvas(cfg.DATADIR + temp_file_name)
 
     canvas.setFont(font_name, font_size)
